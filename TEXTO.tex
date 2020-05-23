@@ -1,0 +1,2790 @@
+
+\documentclass[a4paper,8pt]{article}       
+
+\usepackage{lineno}
+\usepackage[affil-it]{authblk}
+\usepackage{amsthm}
+\usepackage{lineno}
+\usepackage{fullpage}
+\usepackage{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage{complexity}
+\usepackage{amssymb}
+\usepackage{amsmath}
+%\usepackage{tikz}
+
+
+%\usepackage{enumerate}
+%\usepackage[notref,notcite]{showkeys}
+
+%\modulolinenumbers[1]
+\linenumbers
+\onehalfspace
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\newcounter{ContadorRever}
+\newcommand{\rever}[1]{\stepcounter{ContadorRever}\textit{\textbf{REVER $\theContadorRever$: #1}}}
+
+%\newcommand{\T}{{\cal T}}
+
+\usepackage{graphicx,url}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+%\usepackage[latin1]{inputenc}  
+\usepackage{tikz}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{amsfonts}
+\usepackage{amssymb} 
+\usepackage{comment}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\theoremstyle{plain}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{lemma}{Lema}[section]
+\newtheorem{corollary}{Corolário}[section]
+\newtheorem{proposition}{Proposição}[section]
+\newtheorem{conjc}{Conjectura}[section]
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,      
+    urlcolor=blue,
+}
+
+\tikzstyle{vertex}   =[draw,circle, minimum size=8pt, inner sep=0pt]
+\tikzstyle{vertice}  =[draw,circle, minimum size=8pt, inner sep=0pt]
+\tikzstyle{vertice_b}=[draw,circle, minimum size=8pt, inner sep=0pt, color = blue, double]
+\tikzstyle{vertice_r}=[draw,circle, minimum size=8pt, inner sep=0pt, color = red, line width=4]
+
+\newcommand{\hull}[1]{hull(#1)}
+
+
+
+\begin{document}
+%
+\title{O Conjunto P\textsubscript{3} Independente\thanks{Partially supported by CNPq and FAPERJ.}}
+%
+%\titlerunning{Abbreviated paper title}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+%
+\author{Vitor dos Santos Ponciano, 
+Mitre Costa Dourado,Tanilson Dias,
+Rômulo Luiz Oliveira da Silva}
+
+
+%
+\maketitle              % typeset the header of the contribution
+%
+\begin{abstract}
+
+ An independent 2-dominating set of a graph $G$ is a set $S$ of vertices of $G$ such that every vertex not in $S$ is dominated at least twice and every pair of vertices in $S$ are not adjacent. In this paper, We prove that it is NP-completeto decide if for a given planar graph there is an set $S$. We also present polynomial-time algorithms for computing an independent 2-dominating set in line bipartite graph and chordal graph. 
+ 
+
+
+
+\end{abstract}
+%
+\section{Introduction} \label{sec:int}
+
+Let $G = (V(G),E(G))$ be an undirected graph. A subset $S$ of $V(G)$ is an independent set of $G$ if for every $u,v \in S$, $uv \notin E(G)$. A subset $S$ of $V(G)$ is a dominating set of $G$ if for every $v \in V (G)|S$, there exists $u \in S$ such that $uv \in E(G)$. The domination number $\nsucc(G)$ of $G$ is the smallest cardinality of a dominating set of $G$. A dominating set $S$ is an independent dominating set of $G$ if $S$ is an independent set of $G$. The independent domination number $i(G)$ of $G$ is the smallest cardinality of an independent dominating set of $G$. A subset $S$ of $V(G)$ is a 2-dominating set of $G$ if for every $v \in V (G)|S$, $|S \cap N_G(v)|\geq 2$. The 2-domination number $\nsucc_2(G)$ of G is the smallest cardinality of a 2-dominating set of $G$. A 2-dominating set $S$ is an independent 2-dominating set of $G$ if $S$ is an independent set of $G$. The independent 2-domination number of $G$, denoted by $i_2(G)$, is the smallest cardinality of an independent 2-dominating set of $G$.   Leonida and  Allosa \cite{leonida2018independent}, was shown the independent 2-dominating sets in the join two graphs were characterized. O intervalo $P_3$ entre dois vértices $u$ e $v$, $I_{P_3}[u,v]$, consiste deu, $v$ e todos os vértices dos caminhos de comprimento dois entre o par de vértices $u,v$.  Sendo assim, o intervalo $P_3$ de um conjunto de vértices $S,I_{P_3}[S]$, é a união de todos $I_{P_3}[u,v]$ para $u,v\in S$. um conjunto $S$ de vértices de um grafo conexo $G$ é chamado conjunto $P_3$ de $G$ se $I_{P_3}[S] =V(G)$. Um conjunto $P_3$ de cardinalidade mínima é um conjunto $P_3$ mínimo. A cardinalidade de um conjunto $P_3$ mínimo é chamada de número $P_3$, denotado por $n_{P_3}(G)$. Temos $i_2(G)=n_{P_3}(G)$ se $S$ é um conjunto independente. O calculo $n_{P_3}(G)$ foi provado ser NP-COMPLETO para bipartido, cordal, bipartido cordal, linha de bipartido e polinomial para grafo diametro 2 , cografo.\cite{CENTENO}(2012). Vamos provar que  
+$i_2(G)$ nem sempre é possível calcular e NP-COMPLETO para decidir para grafos planar,bipartido,prisma-complementar,grafo com diametro 2 e polinomial para linha de bipartido , coografo, cordal.
+ 
+
+  
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+%\vspace{1.5cm}
+\begin{table}
+\begin{tabular}{|r|r|r|}
+
+    
+
+\hline
+\multicolumn{1}{|c|}{Graph Class} &
+\multicolumn{1}{|c|}{ dupla dominação} &
+\multicolumn{1}{|c|}{ dupla dominação independente}\\
+
+
+\hline
+
+Bipartite&NP-Complete &NP-Complete\\ 
+
+Planar&NP-Complete &NP-Complete\\ 
+
+Chordal&NP-Complete&Polynomial\\ 
+
+Line of bipartite &NP-completo&Polinomial\\ 
+
+Co-grafo &polinomial&polinomial\\ 
+
+Diametro 2&Polinomial&Np-completo\\ 
+
+Prisma Complementar&Np-completo&Np-completo\\ 
+
+
+\hline 
+
+\end{tabular}
+\caption{dupla dominação result}
+\label{tab:my_label_1}
+
+\normalsize
+%\end{sidewaystable}   
+\end{table}
+\end{center} 
+\section{Motivação}
+Todo grafo possui uma dupla dominação, mas não uma dupla dominação independente como caso simples dos grafos da Figura \ref{figura1}. Nosso objetivo é estudar as classes de grafo que possuem uma dupla dominação independente e saber podemos dizer ou não se grafo possui uma dupla dominação independente em tempo polinomial ou NP-completo decidir.
+
+
+
+$P_{3}$ Convexity
+
+
+\begin{figure}[!htb]
+        \centering
+    
+        \begin{tikzpicture}[scale=0.3]
+        \pgfsetlinewidth{1pt}
+        
+        %\tikzset{vertex/.style={circle,  draw, minimum size=13pt, inner sep=0pt}}
+        
+        \begin{scope}
+            \node [vertex,red] (v1) at (-8,4){};
+            \node [vertex,red] (v2) at (-8,8){};
+            \node [vertex] (v3) at (-6,6){};
+            \node [vertex,red] (v4) at (-4,6){};
+            \node [vertex,red] (v5) at (-2,6){};
+            
+           \draw[-] (v1) to (v3);
+             \draw[-] (v2) to (v3);
+             \draw[-] (v3) to (v4);
+             \draw[-] (v4) to (v5);
+             
+        \end{scope}
+
+       
+         \begin{scope}
+            \node [vertex,red] (v1) at (-18,0){};
+            \node [vertex] (v2) at (-18,4){};
+            \node [vertex] (v3) at (-14,0){};
+            \node [vertex,red] (v4) at (-14,4){};
+            \node [vertex,red] (v5) at (-16,8){};
+            
+           \draw[-] (v1) to (v2);
+             \draw[-] (v2) to (v5);
+             \draw[-] (v1) to (v3);
+             \draw[-] (v4) to (v3);
+              \draw[-] (v4) to (v5);
+        \end{scope}
+   
+       \begin{scope}
+            
+            \node [vertex,red] (v2) at (-28,6){};
+            \node [vertex] (v3) at (-26,6){};
+            \node [vertex,red] (v4) at (-24,6){};
+            \node [vertex,red] (v5) at (-22,6){};
+            
+           
+             \draw[-] (v2) to (v3);
+             \draw[-] (v3) to (v4);
+             \draw[-] (v4) to (v5);
+             
+        \end{scope}
+    
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \end{tikzpicture}
+    \caption []{Não possui uma dupla dominação independente os ciclos impares e caminhos pares}
+    \label{figura1}
+\end{figure}
+
+\section{GRAFO K-CUBO}
+
+\begin{figure}[!htb]
+        \centering
+    
+        \begin{tikzpicture}[scale=0.25]
+        \pgfsetlinewidth{1pt}
+        
+        %\tikzset{vertex/.style={circle,  draw, minimum size=13pt, inner sep=0pt}}
+        
+        \begin{scope}
+            \node [vertex,red] (v1) at (-8,0){00};
+            \node [vertex] (v2) at (-8,-4){01};
+            \node [vertex] (v3) at (-4,0){10};
+            \node [vertex,red] (v4) at (-4,-4){11};
+           
+            
+           \draw[-] (v1) to (v2);
+             \draw[-] (v2) to (v4);
+             \draw[-] (v1) to (v3);
+             \draw[-] (v4) to (v3);
+             
+        \end{scope}
+
+        \begin{scope}
+            \node [vertex,red] (v1) at (-21,0){};
+            \node [vertex] (v2) at (-21,-4){};
+            \node [vertex] (v3) at (-17,0){};
+            \node [vertex,red] (v4) at (-17,-4){};
+           
+            
+           \draw[-] (v1) to (v2);
+             \draw[-] (v2) to (v4);
+             \draw[-] (v1) to (v3);
+             \draw[-] (v4) to (v3);
+             
+         \node [vertex] (u1) at (-24,4){};
+            \node [vertex,red] (u2) at (-24,-8){};
+            \node [vertex,red] (u3) at (-14,4){};
+            \node [vertex] (u4) at (-14,-8){};
+           
+            
+           \draw[-] (u1) to (u2);
+             \draw[-] (u2) to (u4);
+             \draw[-] (u1) to (u3);
+             \draw[-] (u4) to (u3);
+                  
+             
+               \draw[-] (u1) to (v1);
+             \draw[-] (u2) to (v2);
+             \draw[-] (u3) to (v3);
+             \draw[-] (u4) to (v4);
+             
+        \end{scope}
+        
+    \begin{scope}
+            \node [vertex,red] (v1) at (-40,0){};
+            \node [vertex] (v2) at (-40,-4){};
+            \node [vertex] (v3) at (-30,0){};
+            \node [vertex,red] (v4) at (-30,-4){};
+           \node [vertex,red] (v5) at (-33.5,5){};
+           \node [vertex] (v6) at (-36.5,5){};
+           \node [vertex] (v7) at (-33.5,-9){};
+           \node [vertex,red] (v8) at (-36.5,-9){};
+             
+            \node [vertex,red] (u1) at (-45,0){};
+            \node [vertex] (u2) at (-45,-6){};
+            \node [vertex] (u3) at (-26,0){};
+            \node [vertex,red] (u4) at (-26,-6){};
+           \node [vertex,red] (u5) at (-31.5,8){};
+           \node [vertex] (u6) at (-39.5,8){};
+           \node [vertex] (u7) at (-31.5,-12){};
+           \node [vertex,red] (u8) at (-39.5,-12){};  
+             
+             \draw[-] (u1) to (u2);   
+             \draw[-] (u1) to (u6);
+             \draw[-] (u1) to (v6);
+              \draw[-] (u1) to (v2);
+              \draw[-] (v1) to (v7);
+              
+              
+              
+             \draw[-] (u2) to (u8);
+              \draw[-] (u2) to (v1);
+               \draw[-] (u2) to (v8);
+            
+              
+              
+             \draw[-] (u3) to (u4);
+              \draw[-] (u3) to (u5);
+              \draw[-] (u3) to (v4);
+              \draw[-] (u3) to (v5);
+              \draw[-] (v3) to (v1);
+              \draw[-] (v3) to (v8);
+              
+              
+               \draw[-] (u4) to (u7);
+              \draw[-] (u4) to (v7);
+              \draw[-] (u4) to (v3);
+              \draw[-] (v4) to (v2);
+             
+              
+              
+              
+              \draw[-] (u5) to (u6);
+              \draw[-] (u5) to (v3);
+              \draw[-] (u5) to (v6);
+              \draw[-] (v5) to (v7);
+              \draw[-] (v5) to (v2);
+              
+              
+              
+              \draw[-] (u6) to (v5);
+              \draw[-] (u6) to (v1);
+              \draw[-] (v6) to (v4);
+              \draw[-] (v6) to (v8);
+              
+              \draw[-] (u7) to (u8);
+              \draw[-] (u7) to (v4);
+               \draw[-] (u7) to (v8);
+       
+       \draw[-] (u8) to (v2);
+               \draw[-] (u8) to (v7);
+        \end{scope}
+      
+    
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \end{tikzpicture}
+    \caption []{k-cubos}
+    \label{figura1}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+Vamos mostrar uma classe que sempre possui um conjunto de dupla dominação independente.
+O $k-cubo(Q_k)$ é um grafo simples cujos vértices são k-uplas ordenadas de 0's e 1's, e tal que dois vértices são adjacentes se e somente se diferem em exatamente uma coordenada. $Q_k$ é um grafo bipartido e $k-regular$.
+\begin{theorem}
+O grafo $Q_k$ para $k\neq2$ tem pelo menos  um conjunto $S$ que é uma dupla dominação independente. 
+\end{theorem}
+
+\begin{proof}
+No caso de $k=2$, $Q_k$ é uma aresta, portanto não possui uma dupla dominação independente. Para $k\neq2$. O caso $k=1$ é próprio vértice e para outros k's como $Q_k$ é um grafo bipartido k-regular, portanto $V(Q_k)=A\cup B$, com $A$ e $B$ independentes e bastará tomar  uma das partições $A$ ou $B$ que teremos uma dupla dominação independente, já que o grau de cada vértice é igual $k\geq3$.
+\end{proof}
+
+
+\section{ LINE GRAPH}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Seja $G$ um grafo simples. O \textbf{grafo de linha} ou \textbf{grafo linha} de $G$, é um grafo $L(G)$, onde $V(L(G))=E(G)$, em outras palavras, é um grafo construído a partir de $G$, do seguinte modo. Para cada arestas de $G$ associamos um vértice do grafo $L(G)$, que desejamos construir. E dois vértices em $L(G)$ são adjacentes se, e somente se, suas arestas correspondentes em $G$ tiverem um extremo em comum. Ao grafo $G$ chamamos de raiz linha de $L(G)$.
+
+
+\begin{figure}[!htb]
+        \centering
+    
+        \begin{tikzpicture}[scale=0.4]
+        \pgfsetlinewidth{1pt}
+        
+        %\tikzset{vertex/.style={circle,  draw, minimum size=13pt, inner sep=0pt}}
+        
+        \begin{scope}
+            \node [vertex] (v1) at (8,0){};
+            \node [vertex] (v2) at (14,0){};
+            \node [vertex] (v3) at (8,-4){};
+            \node [vertex] (v4) at (14,-4){};
+            
+            \node [vertex] (u1) at (18,4){};
+           \node [vertex] (u2) at (22,7){};
+            
+           
+        
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \node [vertice_r] (v'1) at (28,0){};
+            \node [vertex] (v'2) at (34,0){};
+            \node [vertex] (v'3) at (28,-4){};
+            \node [vertice_r] (v'4) at (34,-4){};
+            \node [vertice] (u'1) at (42,-2){};
+            \node [vertice_r] (u'2) at (45,-2){};
+
+        \end{scope}
+
+        \draw[-]  (v1) to (v2);
+        \draw[-,line width=2, color=red, dashed]  (v1) to (v3);
+        \draw[-,line width=2, color=red, dashed]  (v2) to (v4);
+        \draw[-]  (v3) to (v4);
+        
+        \draw[-]  (u1) to (v2);
+        
+              \draw[-,line width=2, color=red, dashed]  (u2) to (u1);
+        
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+         \draw[-]  (u'1) to (u'2);
+        \draw[-]  (v'1) to (v'2);
+        \draw[-]  (v'1) to (v'3);
+        \draw[-]  (v'2) to (v'4);
+        \draw[-]  (v'3) to (v'4);
+        
+        \draw[-]  (u'1) to (v'2);
+        \draw[-]  (u'1) to (v'4);
+       
+        
+   
+      
+    
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \end{tikzpicture}
+    \caption [A graph and its corresponding edges of the generating vertices] {On the left a graph and its edges of a perfect pairing, highlighted in red, corresponding to the vertices of a dupla dominating independent  set marked on your right line graph. Vertices and red edges are dominatings and blacks are domianated.}
+    \label{correspondente.raiz.linha2}
+\end{figure}
+
+Seja $G=(V,E)$ um grafo simples e conexo. Um \textbf{emparelhamento} é um conjunto de arestas $M$, tal que nenhum par de arestas de $M$ venha a ter uma extremidade em comum. Em outras palavras, um emparelhamento em um grafo é um conjunto de arestas, onde quaisquer duas arestas desse conjunto não compartilham vértices \cite{BONDY}.  Dizemos que os vértices extremos de uma aresta $e\in E$ estão emparelhados por $M$ ou simplesmente $M-emparelhados$. Um emparelhamento $M$ \textbf{satura} um vértice $v$ e esse vértice $v$ é dito $M$-saturado quando a aresta $e\in M$ for incidente ao vértice $v$, caso contrário, $v$ é não $M$-saturado ou $M$-insaturado ou simplesmente livre do emparelhamento.
+
+Chamamos a atenção para o fato de que o conjunto vazio define um emparelhamento, pois se $M'\subseteq M$ e $M$ é um emparelhamento, então $M$ também define um emparelhamento. Um emparelhamento $M$ é \textbf{máximo} ou de \textbf{tamanho máximo}, em $G$, quando $M$ tiver o maior número possível de arestas. Um emparelhamento $M$ é chamado de \textbf{perfeito}, se cada vértice $v\in V$ incidir em alguma aresta desse emparelhamento $M$, ou seja, um emparelhamento perfeito é um tipo de emparelhamento em que todas os vértices do grafo são extremos de arestas desse emparelhamento.
+
+\begin{theorem}
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Be $L(G)$ a line graph. The $L(G)$ has an independent 2-dominant set if, and only if the  line root of $L(G)$ has a perfect matchings.
+
+\end{theorem}
+
+\begin{proof}
+$(\Longleftarrow)$ Be $G$ the root of line of graph $L(G)$. Suppose that $L(G)$ graph has an independent 2-dominant set, then for every vertex $u\in (V(L(G))-S)$, we know there are two vertices $v,w\in S$, such that $vu\in E(G)$ and $wu\in E(L(G))$. 
+At the root $G$, the vertices $v,w \in S$ correspond to the edges $e_{v}$ and $e_{w}$ respectively, are not adjacent to each other, because $S$ is an independent set, but are adjacent to a third edge $e_{u}$ corresponding $u$,this is $e_{u}$ is being paired by $e_{v}$ and $e_{W}$. So the edges $e_{v}$, with $v \in S$, form a perfect matchings in $G$.
+
+
+$(\Longleftarrow)$ Suppose $M$ is a perfect matchings of  root $H$. the  edges of $M$ is an set vertex $S$ in $L(G)$  that is independent, as any two $S$ vertices are non-adjacent as it comes from the edges of $M$. Just note that $M$ is a double domination of edges $G$.  
+
+
+
+
+
+
+
+
+
+
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{corollary}
+Se $G$ é um grafo de linha, então é possível decidir se $G$ possui um conjunto $P_3$ independente, em tempo polinomial. 
+\end{corollary}
+
+
+\section{GRAFOS PLANARES}
+Um grafo planar é um grafo que pode ser imerso no plano de tal forma que suas arestas não se cruzem.  Segundo o Teorema de Kuratowski, um grafo planar não pode apresentar nem o grafo completo K5 nem o grafo bipartido K3,3 como subgrafos. 
+
+\begin{theorem} \label{teo1}
+ Se $G$ é um grafo de planar, então  decidir se $G$ possui um conjunto $P_3$ independente, é NP-completo. 
+\end{theorem}
+
+
+
+{\sc Positive (1 in 3)-3SAT}                                 
+\emph{Entrada}: Um conjunto $X$ de variáveis positivas; uma coleção $\mathcal{C}=\{C_1,C_2,\ldots,C_m\}$ de cláusulas sobre  $X$ tal que para cada $C_i\in \mathcal{C}$, $|C_i|= 3$.
+\emph{Objetivo}: Determinar se existe uma atribuição de valores para as variáveis em $ X $\\ de modo que toda cláusula em  $\mathcal{C}$ tem exatamente um literal verdadeiro.
+
+
+
+Given a boolian formula $FNC$  in 1-in-3SAT planar satisfied that is NP-complete \cite{ueverton}, with $m$ clauses and $n$ variables,we will build a planar graph in which an 2-dominant independent set  if and only if $FNC$ is satisfied. Each clasula is represented by a triangle and each variable is represented by a $K_2$.  The edges that are between variables and triangles are constructed as follows: 
+
+Cada literal $x$ ou $\overline{x}$ no triangulo clausula liga-se a variável com valor logico contrario no gadte variável. Veja na Figura
+\ref{planarp32a}.
+
+Suppose there is a set of values that satisfies the formula $FNC$ in 1-in-3-SAT planar.We mark all vertices that are true in $FNC$. We know that exactly one True literal was chosen in each clausula, indicating that in each cloistered triangle has a single vertex that simply dominates the others of the triangle.
+
+
+ Agora, precisamos apenas de um vértices  de cada gaedt variável para dominar os vértices do triangulo que não foram escolhidos, para isso basta escolher seus vizinhos no grafo variável. Note que se $x$ for falso no triangulo clausula o seu vizinho $\overline{x}$ possuem valor verdade no gadte variável e se $x$ for verdadeiro seu vizinho  $\overline{x}$ falso, desse fato é possível obtemos uma dupla dominação independente. Note que escolha da dupla dominação a faz independente, pelo fato de escolhemos o valor contrario do \textit{gadget} clausula e do \textit{gadget} variável. 
+
+Suponha agora que há uma dupla dominação independente  de vértice de $G'$ com vértices de $n + m$ ou menos. Sabemos que $n$ vértices devem estar simplesmente dominando os triângulos, pois cada triângulo requer um vértice dominador,visto que cada vértice do triangulo grau 3 e de outro modo não seria independente. Nós consideramos os vértices clausulas na dupla dominação independente como sendo nossa atribuição da fórmula. Essa atribuição deve satisfazer a fórmula, pois todas as cláusulas são atendidas pela construção do nosso gadget com único valor verdade e x ou x barra é marcado.
+
+
+
+
+
+
+
+
+
+\begin{figure}[!htb]
+        \centering
+    
+        \begin{tikzpicture}[scale=0.26]
+        \pgfsetlinewidth{1pt}
+        
+        \tikzset{
+            vertex/.style={circle,  draw, minimum size=9pt, inner sep=1pt}
+            }
+            
+           
+           \begin{scope}
+           
+            \node [vertex,line width=2,color=red] (u1) at (-11,4.5){x};
+            \node [vertex,line width=2,color=black] (u2) at (-7,4.5){$\overline{x}$};
+            \node [vertex,line width=2,color=black] (u3) at (-11,-3){$\overline{x}$};
+            \node [vertex,line width=2,color=red] (u4) at (-14,-7){$\overline{y}$};
+            \node [vertex,line width=2,color=black] (u5) at (-8,-7){z};
+            
+            
+            \end{scope}
+        
+           
+            \draw[-,]  (u1) to (u2);
+            \draw[-]  (u3) to (u4); 
+            \draw[-]  (u4) to (u5);    
+            \draw[-]  (u3) to (u5);
+        
+        
+            \begin{scope}[shift={(15,0)}]
+           
+            \node [vertex,line width=2,color=black] (v1) at (-11,5){y};
+            \node [vertex,line width=2,color=red] (v2) at (-7,5){$\overline{y}$};
+            
+            \node [vertex,line width=2,color=red] (v3) at (-11,-3){x};
+            \node [vertex,line width=2,color=black] (v4) at (-14,-7){z};
+            \node [vertex,line width=2,color=black] (v5) at (-8,-7){y};
+            
+            
+            \end{scope}
+          
+            \draw[-]  (v1) to (v2);
+            \draw[-]  (v3) to (v4); 
+            \draw[-]  (v4) to (v5);    
+            \draw[-]  (v3) to (v5);
+          
+          
+          
+          \begin{scope}[shift={(28,0)}]
+           
+            \node [vertex,line width=2,color=black] (a1) at (-11,4.5){z};
+            \node [vertex,line width=2,color=red] (a2) at (-7,4.5){$\overline{z}$};
+            \node [vertex,line width=2,color=black] (a3) at (-11,18){$\overline{x}$};
+            \node [vertex,line width=2,color=black] (a4) at (-14,14){y};
+            \node [vertex,line width=2,color=red] (a5) at (-8,14){$\overline{z}$};
+            
+            \end{scope}
+          
+              
+            \draw[-]  (a1) to (a2);
+            \draw[-]  (a3) to (a4); 
+            \draw[-]  (a4) to (a5);    
+            \draw[-]  (a3) to (a5);
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+              
+              
+              
+            \draw[-] (u1).. controls (-2,15).. (a3); 
+            \draw[-]  (v2) to (a4);  
+            \draw[-]  (a1) to (a5);   
+            \draw[-]  (u3) to (u1);   
+            \draw[-]  (v3) to (u2);  
+            \draw[-]  (v5) to (v2);  
+            
+            \draw[-] (u4).. controls (-15,18).. (v1);  \draw[-] (v4).. controls (9,-11).. (a2); 
+            \draw[-] (u5).. controls (9,-16).. (a2); 
+              
+              
+              
+              
+                  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                  
+              
+         \label{planarp32a}         
+                  
+                  
+                  
+    \end{tikzpicture}
+
+    \caption{\textit{Gadget} da redução polinomial do problema 1-in-3sat para o problema do número $P_3$ independente em grafos planares. $\mathcal{F}=\{(x\lor y\lor z)\wedge (\overline{x}\lor y\lor \overline{z})\wedge(\overline{x}\lor \overline{y}\lor z)\}$, com $x=T$, $y=F$, $z=F$.}
+    \label{fig:BORBO.livre06}
+\end{figure}
+
+
+
+
+
+
+
+
+\begin{figure}[!htb]
+        \centering
+    
+        \begin{tikzpicture}[scale=0.27]
+        \pgfsetlinewidth{1pt}
+        
+       % \tikzset{             vertex/.style={circle,  draw, minimum size=9pt, inner sep=1pt}
+            
+            
+           
+           \begin{scope}
+           
+            \node [vertex,line width=2,color=black] (u1) at (-11,4.5){x};
+            \node [vertex,line width=2,color=red] (u2) at (-7,4.5){$\overline{x}$};
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \node [vertex,line width=2,color=black] (u3) at (-11,-3){${x}$};
+            \node [vertex,line width=2,color=red] (u4) at (-14,-7){${y}$};
+            \node [vertex,line width=2,color=black] (u5) at (-8,-7){z};
+            
+            
+            \end{scope}
+        
+           
+            \draw[-,]  (u1) to (u2);
+            \draw[-]  (u3) to (u4); 
+            \draw[-]  (u4) to (u5);    
+            \draw[-]  (u3) to (u5);
+        
+        
+            \begin{scope}[shift={(15,0)}]
+           
+            \node [vertex,line width=2,color=red] (v1) at (-11,4.5){y};
+            \node [vertex,line width=2,color=black] (v2) at (-7,4.5){$\overline{y}$};
+            
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \node [vertex,line width=2,color=red] (v3) at (-11,-3){$\overline{x}$};
+            \node [vertex,line width=2,color=black] (v4) at (-14,-7){$\overline{z}$};
+            \node [vertex,line width=2,color=black] (v5) at (-8,-7){$\overline{y}$};
+            
+            
+            \end{scope}
+          
+            \draw[-]  (v1) to (v2);
+            \draw[-]  (v3) to (v4); 
+            \draw[-]  (v4) to (v5);    
+            \draw[-]  (v3) to (v5);
+          
+          
+          
+          \begin{scope}[shift={(28,0)}]
+           
+            \node [vertex,line width=2,color=black] (a1) at (-11,4.5){z};
+            \node [vertex,line width=2,color=red] (a2) at (-7,4.5){$\overline{z}$};
+            
+            
+            \node [vertex,line width=2,color=black] (a3) at (-11,18){$x$};
+            \node [vertex,line width=2,color=black] (a4) at (-14,14){y};
+            \node [vertex,line width=2,color=red] (a5) at (-8,14){$\overline{z}$};
+            
+            \end{scope}
+          
+              
+            \draw[-]  (a1) to (a2);
+            \draw[-]  (a3) to (a4); 
+            \draw[-]  (a4) to (a5);    
+            \draw[-]  (a3) to (a5);
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+              
+              
+              
+            \draw[-] (u2).. controls (-2,15)..(a3); 
+            \draw[-]  (v2) to (a4);  
+            \draw[-]  (a1) to (a5);   
+            \draw[-]  (u3) to (u2);   
+            \draw[-]  (v3) to (u1);  
+            \draw[-]  (v5) to (v1);  
+            
+            \draw[-] (u4)..controls (-15,14)..(v2);  
+            \draw[-] (v4)..controls (9,-11)..(a1); 
+            \draw[-] (u5)..controls (9,-16)..(a2); 
+              
+              
+              
+              
+                  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                  
+               
+         \label{planarp32b}         
+                  
+                  
+                  
+    \end{tikzpicture}
+
+    \caption{\textit{Gadget} da redução polinomial do problema 1-in-3sat para o problema do número $P_3$ independente em grafos planares. $\mathcal{F}=\{(x\lor y\lor z)\wedge (\overline{x}\lor \overline{y}\lor \overline{z})\wedge(\overline{x}\lor {y}\lor \overline{z})\}$} não existe conjunto P3-independente.
+    \label{fig:BORBO.livre05}
+\end{figure}
+
+
+
+
+
+
+
+
+\newpage
+
+\section{BIPARTIDOS}
+ Um grafo bipartido  é um grafo cujos vértices podem ser divididos em dois conjuntos disjuntos $U$ e $V$ tais que toda aresta conecta um vértice em $U$ a um vértice em $V$, ou seja, $U$ e $V$ são conjuntos independentes. Equivalentemente, um grafo bipartido é um grafo que não contém qualquer ciclo de comprimento ímpar. 
+\begin{theorem}
+ O problema do Número $P_3$-independente restrito a grafos bipartido é NP-completo.  
+\end{theorem}
+
+\begin{proof}
+Seja $(G,k)$ uma instância do problema do número $P_3$-independente em grafos planares. É fácil ver que está contido em NP pela mesma justificativa do teorema anterior. Mostraremos que é NP-difícil. Seja $G'$ construído a partir de $G$ da seguinte maneira:
+Seja $U$ e $U'$ as partições de $G'$, onde $U$ e $U'$ são cópias de $V(G)$. O conjunto de aresta $E(G')$ é dado da seguinte maneira: Se $v_iv_j \in E(G)$, então $ u_iu'_j\in E(G')$. 
+
+\begin{figure}[h]
+    \centering
+
+\begin{tikzpicture}[scale=0.5]
+
+\pgfsetlinewidth{1pt}
+
+\tikzset{
+    vertex/.style={circle,  draw, minimum size=5pt, inner sep=0pt}}
+
+\draw (4,6) node[above] {$U$};
+\draw (-2,6) node[above] {$U'$};
+
+
+\draw (-8,3) node[above] {$G$};
+
+\node [vertex,fill=black](z1) at (-10,3) [label=right:$v_1$]{};
+\node [vertex] (z2) at (-7,1) [label=above:$v_2$]{} edge (z1);
+\node [vertex] (z3) at (-10,-1) [label=left:$v_3$]{} edge (z1) edge (z2);
+\node [vertex,fill=black] (z4) at (-10,-2) [label=right:$v_4$]{} edge (z3);
+\node [vertex,fill=black]  (z5) at (-6,1) [label=right:$v_5$]{} edge (z2);
+
+
+\node [vertex, fill=black] (u1) at (-1,3) [label=above:$u_1$]{};
+\node [vertex]  (u2) at (-1,1) [label=above:$u_2$]{} ;
+\node [vertex]  (u3) at (-1,-1) [label=above:$u_3$]{};
+\node [vertex, fill=black] (u4) at (-1,-3) [label=above:$u_4$]{};
+\node [vertex, fill=black] (u5) at (-1,-5) [label=above:$u_5$]{};
+
+
+
+
+
+\node [vertex,fill=black] (v1) at (4,3) [label=above:$u'_1$]{}
+;
+\node [vertex] (v2) at (4,1) [label=above:$u'_2$]{}
+;
+\node[vertex]  (v3) at (4,-1) [label=above:$u'_3$]{}
+;
+\node [vertex,fill=black] (v4) at (4,-3) [label=above:$u'_4$]{}
+;
+\node [vertex,fill=black] (v5) at (4,-5) [label=above:$u'_5$]{}
+;
+
+
+
+\draw[-](u1)--(v2);
+\draw[-](u1)--(v3);
+\draw[-](u2)--(v1);
+\draw[-](u2)--(v3);
+\draw[-](u2)--(v5);
+\draw[-](u3)--(v1);
+\draw[-](u3)--(v2);
+\draw[-](u3)--(v4);
+\draw[-](u4)--(v3);
+\draw[-](u5)--(v2);
+
+
+ 
+
+\draw[dashed] (-1,0) ellipse (1.5cm and 5.5cm);
+\draw[dashed] (4,0) ellipse (1.5cm and 5.5cm);
+
+\end{tikzpicture}
+
+    \caption{Redução do {\sc Número $P_3$-independente} em grafos gerais para {\sc Número $P_3$-independente} de grafo bipartido}
+    \label{fig:split}
+\end{figure}
+Suponha que  $G$ tenha um conjunto $P_3$-independente $D$ com $|D|\leq k$, provaremos que $G'$ tem um conjunto $P_3$-independente $S'=D_u\cup D'_u$, com $|S'|\leq 2k$. Tomamos um $u_k\in U-D_u$, então existe dois vértices $u'_i$ e $u'_j\in D_u'\cup U'$ com $u_ku'_i$ e $ u_ku'_j \in E(G)$. Deste modo $u_k\in I[u'_i,u'_j]\subseteq I[S']$. Assim, por simetria, o mesmo ocorrera se tomarmos um um $u_k'\in U'-D_u'$, $S'$ é um conjunto $P_3$-independente com $|S'|\leq 2k$, note que não existe arestas $u'_i$ e $u_i$ e não existe aresta para $u'_i$ e $u_i$ em $S'$ visto que são independentes em $G$ , isto  garante a independência de $S'$. 
+
+Por outro lado, seja $S'$ é um conjunto $P_3$-independente de $G'$ com 
+$|S'|\leq 2k$, mostraremos que $D=S'\cup V(G')$. Se $u\in U-D$, então existe um vértice $u_j'$ e $u_k'\in D'\cup U'$ e $v\in D$ com $u \in I[u',v]$ ou haverá um vértice $u'\in D'\cup U'$. Nestes dois casos $u$ é vizinho de $u'_i,u'_j$. Por simetria, $D$ é $P_3$-independente de $G$ com $|D|\leq k$.
+\end{proof}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+\newpage
+
+\section{GRAFOS CORDAIS}
+
+Um grafo é cordal se e somente se não admite nenhum ciclo induzido de tamanho maior que 3. Assim, todo subgrafo induzido de um grafo cordal também é cordal.
+
+
+Sejam $G  =  (V, E)$  um  grafo,  com  $n  =  |V|$,  e    $V \in V$  vértice  qualquer  de  $G$.  Dizemos  que  $v$  é  simplicial quando $N(v)$ é uma clique em G (i.e., o subgrafo $G[N(v)]$ de $G$ induzido por $N(v)$ é um grafo completo).  Um esquema de eliminação perfeita (EEP) de $G$ é uma função bijetora $\varphi: \{1, ..., n\}\rightarrow{V}$ tal que $\varphi(i)$ é um vértice simplicial em $G[{\varphi(j) | i\leq j \leq n}]$, para $i = 1,..., n$. Um EEP pode ser melhor visualizado  se  percebermos  que  sua  definição  induz  a  dispor  os  vértices  em  uma  seqüência    $\varphi(G) = [\varphi(1), ..., \varphi(n)]$, de maneira que todo vértice seja simplicial no subgrafo de $G$ induzido por ele e pelos que o seguem na seqüência $\varphi$. Assim, dada uma posição i na seqüência, $\varphi(i)$ denota o vértice que a ocupa e a inversa, $\varphi^{-1}(v)$, corresponde à posição ocupada pelo vértice $v$.
+
+
+Teorema  1  (Golumbic(1980)).  Um  grafo  é  cordal  se,  e  somente  se,  ele  admite  um  esquema  de  eliminação perfeita, que pode iniciar-se com qualquer vértice simplicial. 
+
+ \begin{figure}[h]
+    \centering
+
+\begin{tikzpicture}[scale=0.3]
+
+\pgfsetlinewidth{1pt}
+
+\tikzset{
+    vertex/.style={circle,  draw, minimum size=13pt, inner sep=0pt}}
+
+
+
+
+ \begin{scope}[shift={(-2,0)}]
+\node [vertex,white](u40) at (-10,1) [label=right:$G$]{};
+
+
+\node [vertex](u1) at (-4,0) [label=right:]{$c$};
+\node [vertex] (u2) at (-1,-6)
+[label=right:]{$f$}edge(u1);
+\node [vertex](u3) at (-7,-6) [label=]{$e$} edge (u1) edge (u2);
+\node [vertex](u4) at (-1.5,3) [label=right:]{$a$} edge (u1);
+\node [vertex](u5) at (-4.5,3) [label=right:]{$b$} edge (u1);
+\node [vertex](u6) at (4,0) [label=right:]{$l$} edge (u1)edge(u2);
+\node [vertex](u'6) at (4,4) [label=right:]{$n$} edge (u6);
+\node [vertex](u''6) at (4,8) [label=right:]{$0$} edge (u'6);
+
+
+
+ \node [vertex](u7) at (10,-3) [label=right:]{$j$} edge (u1)edge(u2)edge(u6);
+ 
+  \node [vertex](u'7) at (14,-3) [label=right:]{$p$} edge (u7);
+ 
+ 
+  \node [vertex](u8) at (4,-6) [label=right:]{$i$} edge (u1)edge(u2)edge(u6)edge(u7);
+ \node [vertex](u9) at (-10,-2) [label=right:]{$d$} edge (u1) edge (u3); 
+  \node [vertex](u10) at (-7,-12) [label=right:]{$g$} edge (u2) edge (u3);
+  \node [vertex](u11) at (-1,-12) [label=right:]{$h$} edge (u2) edge (u3)edge(u10);
+  \node [vertex](u12) at (-4,-16) [label=right:]{$m$} edge (u11)edge(u10);
+  \end{scope}
+ 
+     \begin{scope}[shift={(25,0)}]
+\node [vertex,white](u40) at (-10,1) [label=right:$G$]{};
+
+
+\node [vertex](u1) at (-4,0) [label=right:]{$c$};
+\node [vertex] (u2) at (-1,-6)
+[label=right:]{$f$}edge(u1);
+\node [vertex](u3) at (-7,-6) [label=]{$e$} edge (u1) edge (u2);
+\node [vertex,red](u4) at (-1.5,3) [label=right:]{$a$} edge (u1);
+\node [vertex,red](u5) at (-4.5,3) [label=right:]{$b$} edge (u1);
+
+
+\node [vertex](u6) at (4,0) [label=right:]{$l$} edge (u1)edge(u2);
+
+\node [vertex](u'6) at (4,4) [label=right:]{$n$} edge (u6);
+\node [vertex,red](u''6) at (4,8) [label=right:]{$0$} edge (u'6);
+
+\node [vertex](u7) at (10,-3) [label=right:]{$j$} edge (u1)edge(u2)edge(u6);
+ \node [vertex,red](u'7) at (14,-3) [label=right:]{$p$} edge (u7);
+
+  \node [vertex,red](u8) at (4,-6) [label=right:]{$i$} edge (u1)edge(u2)edge(u6)edge(u7);
+ \node [vertex,red](u9) at (-10,-2) [label=right:]{$d$} edge (u1) edge (u3); 
+  \node [vertex](u10) at (-7,-12) [label=right:]{$g$} edge (u2) edge (u3);
+  \node [vertex](u11) at (-1,-12) [label=right:]{$h$} edge (u2) edge (u3)edge(u10);
+   \node [vertex,red](u12) at (-4,-16) [label=right:]{$m$} edge (u11)edge(u10);
+  \end{scope}
+         
+       
+\end{tikzpicture}
+        \caption{A chordal graphs $G$} 
+        
+    
+        \label{fig:my_label1}
+\end{figure}
+
+
+A  determinação  eficiente  de  todos  os  vértices  simpliciais  o  máxima  estudado  e Uehara  (2004) e Markezon (2006) que demonstra a possibilidade de resolver o problema em tempo linear utilizando a árvore de cliques do grafo cordal e eliminação por vértices simplicias. 
+
+
+
+
+
+
+
+
+
+
+
+\begin{theorem}
+ Seja $G$ um grafo cordal é seja $S\subseteq V(G)$ uma dupla dominação independente. Se $v$ é um vértice simplicial, então $v \in S$ para todo $S\subseteq V(G)$.
+\end{theorem}
+
+\begin{theorem}
+ Se  $G$ é um grafo cordal conexo  e o seu conjunto de simpliciais $S$, então o grafo $G-S$ permanece cordal e conexo.
+\end{theorem}
+
+\begin{proof}
+Suponha que $G$ é um grafo cordal conexo  e o seu conjunto de simpliciais $S$, como para todo vértice $v \in S$ , $N(v)=K_n$ temos que o vértice $v \in S$ não pode permanecer a uma clique separadora de $G$, caso contrario $v$ teria pelo menos dois vizinhos em cliques distintas.
+\end{proof}
+
+
+
+\begin{proof}\label{teocordal}  
+  Seja $S\subseteq V(G)$ uma dupla dominação independente e
+  $v$ é um vértice simplicial. Suponha por absurdo que $v \notin S$, então existe $u,w \in S$, tal que $uv$ e $wv \in S$. Absurdo $u,w \in N(v)$ e $uw \in E(G)$, já que $N(v)$ é uma clique, porém $u,w \in S$ e $S$ independente.
+\end{proof}
+
+
+\begin{corollary}
+Se $u$ e $v$ são simpliciais tal que $uv \in E(G)$. Então $G$ não possui dupla dominação independente. 
+\end{corollary}
+
+
+
+\label{sec:parameter2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{algorithm}[!htb] \label{alg:hn1}
+	
+	\KwIn{Grafo $G$ split}
+	\KwOut{$S$ um conjunto $P_3$-independente se existe}
+	$S \leftarrow \emptyset$
+    $S' \leftarrow \{simplicias de G\}$ (Linear)
+	
+	Se ( Existe $uv \in E(S')$ ), então 
+		
+		$S \leftarrow \emptyset$ ($G$ não possui $P_3$-independente.)
+		
+	Senão ($S'=I$ ou $S'=	\{u\}\bigcup S_I'$)
+	
+	Marque $v \in V(G-S_I')$ com $N$ se $v$ tem um único vizinho em $C$,
+caso contrario marque com $N^{~}$. 
+   
+		Se pelo menos um vértice de G-S' for marcado com N
+		
+	  $G$ não possui $P_3$-independente.
+	  
+        Senão retorne ($S'=I $ ou $ S'=	\{u\}\bigcup S_I'$)
+        
+	fim-se
+	
+	fim-se
+	
+	fim
+	\caption{$P_3$-independente}
+	\label{alg:general1}
+\end{algorithm}
+
+\begin{proof}
+ Vamos provar o algoritmo está correto. Seja $S$ um conjunto $P_3$-independente em $G=C\bigcup I$, então $S'=I $ou$ S'=	{u}\bigcup S_I'$. Pois, $I$ é um conjunto de simplicias em $G$ e é um conjunto independente, portanto pelo teorema anterior $I\subseteq S$. Para $u\in C$ simplicial pertencer a $S$. Nao deve existir outro simplicial na clique, senão $S$ nao seria $P_3$-independente. 
+\end{proof}
+
+
+%v
+
+
+
+\label{sec:parameter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{algorithm}[!htb] \label{alg:hn2}
+	
+	\KwIn{Grafo $G$ cordal}
+	\KwOut{$S$  dupla dominação independente se existe}
+	$S \leftarrow \emptyset$
+    $S' \leftarrow \{simplicias de G\}$ (Linear)
+	
+	Se ( Existe $uv \in E(S')$ ), então \\
+		
+		$S \leftarrow \emptyset$ ($G$ não possui $P_3$-independente.)
+		
+	Senão \\
+		$S \leftarrow S' $ 
+	    Considere $G'=G-S'$ conexo e cordal.\\
+    	Marque $v \in V(G-S')$ com $N$ se $v$ tem um único vizinho em $S'$,
+    	\\
+        Com $\tilde{N}$ caso tenha mais de dois vizinhos em $S'$
+        
+        ou já foi marcado anteriormente
+        . 
+    Se \\   
+        Considere $S''$ o conjunto de simplicias de $G'=G-S'$ \\
+        $N'=\{v \in V(G-S')| v -marcado- N\}$ \\
+        $\tilde{N'}=\{v \in V(G-S')|  v -marcado-  \tilde{N}\}$ \\
+       Se existir um vértice $v \in S''\cap N'$ tal que 
+       $N(v)\subseteq N'$ , não existe P3-independente.\\
+	  Caso contrario\\
+	  Considere $G''=G'-S''$ cordal é conexo.
+	  Vão existir vértices $v \in  V(G'-S'')\cap N'$ e
+	  $v \in  V(G'-S'')\cap \tilde{N'}
+	  $\\
+	  retorne(linha 5) 
+        Senão retorne (sim)
+        
+	fim-se
+	
+	fim-se
+	
+	fim
+	\caption{$P_3$-independente}
+	\label{alg:general2}
+\end{algorithm}
+
+
+
+
+\begin{proof}
+
+Para corretude vamos utilizar o Teorema \ref{teocordal} e teorema da eliminação por simplicias em cordal. Recebemos um conjunto $S$ vazio, no qual queremos que seja uma dupla dominação de $G$. Na primeira linha encontramos o conjunto $S'$ de simpliciais em tempo linear. Pelo teorema \ref{teocordal} $S'\subseteq S$ , ora $S'$ deve ser um conjunto independente, o que explica a linha dois do algoritmo. Agora, tomamos $N(S')$ que estará simplesmente ou duplamente dominado, visto que $S'\subseteq S$,dái o fato de marcamos com $N$ ou $N^{~}$. Desse fato, 
+$N(S')$ não está contido $S$.
+Por eliminação de simplícias em grafo cordal, sabemos que $G-S'$ é um grafo cordal e $G'=(G-S')-N(S')$ também é cordal. O grafo $G'$ 
+é um grafo cordal para cada componente conexa $G_i$. Temos 4, casos a decidir construídos diretamente pela eliminação por simpliciais:
+
+
+
+
+
+
+
+
+
+
+
+  
+
+ 
+ 
+\end{proof}
+
+
+\section{GRAFOS DISTÂNCIA-HEREDITÁRIOS}
+
+Os grafos distância-hereditários foram definidos e estudados primeiramente em [14]. Um grafo $G$ é distância-hereditário se para todo subgrafo induzido conexo $H$ de $G$ as distâncias em $H$ são iguais que as em $G$. Isto é, para todo subgrafo
+induzido conexo $H$ de $G$, $d_H(u, v)$ = $d_G(u, v)$ $ \forall u, v \in V (H)$. Como o próprio nome diz, trata-se da classe de grafos para o qual a distância entre vértices é uma propriedade hereditária e portanto é uma classe fechada por subgrafos induzidos.
+
+
+
+
+
+
+
+
+
+
+
+   
+          Theorem 1(Chang et al.[10]). Distance-hereditary graphs can be defined recursively as follows:
+   
+   \begin{itemize}
+       \item  A graph consisting of only one vertex is distance-hereditary, and the twin set is the vertex itself.
+       
+       \item If $G_L$ and $G_R$ are disjoint distance-hereditary graphs with the twin sets $TS(G_L)$ and $TS(G_R)$, respectively , then the graph $G=G_L\cup G_R$ is a distance-hereditary graph and the twin set of $G$ is $TS(G_L)\cup TS(G_R)$. $G$ is said to be obtained from $G_L$ and $G_R$ by a false twin operation.
+   
+   
+   \item If $G_L$ and $G_R$ are disjoint distance-hereditary graphs with the twin sets $TS(G_L)$ and $TS(G_R)$ , respectively , then the graph $G$ obtained by connecting every vertex of $TS(G_L)$ to all vertices of $TS(G_R)$ is a distance-hereditary graph, and the twin set of $G$ is $TS(G_L)\cup TS(G_R)$. $G$ is said to be obtained from $G_L$    and $G_R$ by a true twin operation.
+   
+   \item If $G_L$ and $G_R$ are disjoint distance-hereditary graphs with the twin sets $TS(G_L)$ and $TS(G_R)$ , respectively , then the graph $G$ obtained by connecting every vertex of $TS(G_L)$ to all vertices of $TS(G_R)$ is a distance-hereditary graph, and the twin set of $G$ is $TS(G_L)$. $G$ is said to be obtained from $G_L$ and $G_R$ by a pendant vertex operation.
+   
+   \end{itemize}
+   
+  
+   
+   
+   By Theorem 1, a distance-hereditary graph $G$ has its own twin set $TS(G)$, the twin set $TS(G)$ is a subset of vertices of $G$, and it is defined recursively. The construction of $G$ from disjoint distance-hereditary graphs $G_L$ and $G_R$ as described in Theorem 1 involves only the twin sets of $G_L$ and $G_R$. Following Theorem 1, a binary ordered decomposition tree can be obtained in linear-time $[10]$. In this decomposition tree, each leaf is a single vertex graph, and each internal node represents one of the three operations: pendant vertex operation (labelled by P), true twin operation (labelled by T), and false twin operation (labelled by F). This ordered decomposition tree is called a PTF-tree. It has $2n-
+   
+   1$ tree nodes. Fig 2 illustrates an example of a PTF-tree. Hence, a PTF-tree of a distance-hereditary graph can be obtained in linear-time[10].  
+   
+   
+   
+
+   
+   \newpage
+   
+   
+\begin{figure}[!htb]
+        \centering
+    
+        \begin{tikzpicture}[scale=0.3]
+        \pgfsetlinewidth{1pt}
+        
+        \tikzset{
+            vertex/.style={circle,  draw, minimum size=10pt, inner sep=1pt}
+            }
+            
+  
+   
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5   
+
+   
+   
+  
+   \node [vertex,line width=2,color=black] (P0) at (-25,10){$P$}; 
+   \node [vertex,line width=2,color=black] (P1) at (-20,5){$T(G_R)$}; 
+    \node [vertex,line width=2,color=black] (P2) at (-30,5){$T(G_L)$}; 
+   \draw[-]  (P0) to (P1);
+   \draw[-]  (P0) to (P2);
+     
+ 
+
+  
+   \node [vertex,line width=2,color=black] (T0) at (-45,10){$T$}; 
+   \node [vertex,line width=2,color=black] (T1) at (-40,5){$T(G_R)$}; 
+    \node [vertex,line width=2,color=black] (T2) at (-50,5){$T(G_L)$}; 
+   \draw[-]  (T0) to (T1);
+   \draw[-]  (T0) to (T2);
+     
+  
+   
+      \node [vertex,line width=2,color=black] (F0) at (-5,10){$F$}; 
+   \node [vertex,line width=2,color=black] (F1) at (-0,5){$T(G_R)$}; 
+    \node [vertex,line width=2,color=black] (F2) at (-10,5){$T(G_L)$}; 
+   \draw[-]  (F0) to (F1);
+   \draw[-]  (F0) to (F2);
+    
+   
+   
+   
+   
+   
+         \end{tikzpicture}
+         
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
+
+    
+     \begin{itemize}
+          \item Na operação (P) todos vértices da subárvore direita $TS(G_R)$  apenas serão vizinhos da árvore a esquerda $TS(G_L)$ para todo grafo.
+     
+          \item Na operação (T) todos vértices da subárvore esquerda $TS(G_L)$ serão vizinhos da árvore a direita $TS(G_R)$ menos as sub-arvores com raiz (P) no caminho até as folhas.
+          
+          \item Na operação (F) todos vértices da subárvore esquerda $TS(G_L)$ não serão vizinhos da árvore a direita $TS(G_R)$. 
+          
+          
+      \end{itemize}  
+      
+      
+   \end{figure}
+   
+   
+   \begin{figure}[!htb]
+        \centering
+    
+        \begin{tikzpicture}[scale=0.3]
+        \pgfsetlinewidth{1pt}
+        
+        \tikzset{
+            vertex/.style={circle,  draw, minimum size=10pt, inner sep=1pt}
+            }
+            
+  
+   
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5   
+ \node [vertex,line width=2,color=black] (1) at (-50,4){$1$};
+\node [vertex,line width=2,color=black] (2) at (-50,0){$2$};
+ \draw[-]  (1) to (2);
+ \node [vertex,line width=2,color=black] (3) at (-45,-2){$3$};
+  \draw[-]  (1) to (3);   
+ \node [vertex,line width=2,color=black] (4) at (-40,0){$4$}; 
+   \draw[-]  (1) to (4);  
+ \node [vertex,line width=2,color=black] (5) at (-40,6){$5$}; 
+   \draw[-]  (1) to (5); 
+    \draw[-]  (3) to (5); 
+  \draw[-]  (4) to (5); 
+  \node [vertex,line width=2,color=black] (6) at (-45,8){$6$}; 
+    \draw[-]  (1) to (6); 
+    \draw[-]  (3) to (6); 
+  \draw[-]  (4) to (6);
+   \node [vertex,line width=2,color=black] (7) at (-55,4){$7$};
+    \draw[-]  (1) to (7);
+   \node [vertex,line width=2,color=black] (8) at (-60,6){$8$};
+    \draw[-]  (7) to (8);
+   \node [vertex,line width=2,color=black] (9) at (-60,0){$9$};
+    \draw[-]  (7) to (9);
+   \draw[-]  (8) to (9);
+    \node [vertex,line width=2,color=black] (10) at (-52,-2){$10$};
+    \node [vertex,line width=2,color=black] (11) at (-57,-2){$11$};
+   \draw[-]  (7) to (10);
+   \draw[-]  (7) to (11);
+   
+   
+   
+  
+   \node [vertex,line width=2,color=black] (R) at (-25,10){$T$}; 
+   \node [vertex,line width=2,color=black] (R1) at (-20,5){$P$}; 
+    \node [vertex,line width=2,color=black] (R2) at (-30,5){$P$}; 
+   \draw[-]  (R) to (R1);
+   \draw[-]  (R) to (R2);
+     
+     
+     
+     
+     
+     \node [vertex,line width=2,color=black] (R11) at (-20,5){$P$};
+     \node [vertex,line width=2,color=black] (R12) at (-23,0){$7$};
+   \draw[-]  (R1) to (R11);
+   \draw[-]  (R1) to (R12);
+    \node [vertex,line width=2,color=black] (R111) at (-14,-5){$F$};
+   \draw[-]  (R11) to (R111);
+   
+   \node [vertex,line width=2,color=black] (R1111) at (-11,-10){$F$};
+    \node [vertex,line width=2,color=black] (R1112) at (-17,-10){$T$};
+   
+   \draw[-]  (R111) to (R1111);
+    \draw[-]  (R111) to (R1112);
+   
+   
+   \node [vertex,line width=2,color=black] (R11111) at (-9,-15){$11$};
+   \node [vertex,line width=2,color=black] (R11112) at (-13,-15){$10$};
+    \draw[-]  (R1111) to (R11111);
+    \draw[-]  (R1111) to (R11112);
+   
+   \node [vertex,line width=2,color=black] (R11121) at (-15,-15){$9$};
+   \node [vertex,line width=2,color=black] (R11122) at (-19,-15){$8$};
+   
+    \draw[-]  (R1112) to (R11121);
+    \draw[-]  (R1112) to (R11122);
+   
+   
+   
+   
+   
+   
+    \node [vertex,line width=2,color=black] (R21) at (-33,0){$P$};
+     \node [vertex,line width=2,color=black] (R22) at (-27,0){$T$};
+   \draw[-]  (R2) to (R21);
+   \draw[-]  (R2) to (R22);
+    \node [vertex,line width=2,color=black] (R211) at (-36,-5){$1$};
+    \node [vertex,line width=2,color=black] (R212) at (-30,-5){$2$};
+     \draw[-]  (R21) to (R211);
+   \draw[-]  (R21) to (R212);
+     \node [vertex,line width=2,color=black] (R221) at (-24,-10){$F$};
+       \node [vertex,line width=2,color=black] (R222) at (-30,-10){$F$};
+         \draw[-]  (R22) to (R221);
+   \draw[-]  (R22) to (R222);
+    \node [vertex,line width=2,color=black] (R2211) at (-22,-15){$3$};
+    \node [vertex,line width=2,color=black] (R2212) at (-26,-15){$4$};
+      \draw[-]  (R221) to (R2211);
+   \draw[-]  (R221) to (R2212);
+     \node [vertex,line width=2,color=black] (R2221) at (-28,-15){$5$};
+      \node [vertex,line width=2,color=black] (R2222) at (-32,-15){$6$};
+      \draw[-]  (R222) to (R2221);
+   \draw[-]  (R222) to (R2222);
+   
+
+   
+   
+   
+   
+   
+   
+   
+   
+   
+         \end{tikzpicture}
+         
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
+
+   
+      
+      
+   \end{figure}
+   
+   
+\begin{theorem}
+Dado duas folhas $u,v \in T(G)$, $v$ é um vértice pendente se o pai de $u$ e $v$ é o nó $P$ ou $v$ está em um caminho onde os ancestrais são do tipo $F,F,...,P$.
+ \end{theorem}
+   
+\begin{theorem}
+ Um vértice $v\in T(G_{RP})$(sub-arvore a direita de raiz P) é articulação-folha se $P$ for seu pai ou seus ancestrais sem ser raiz de $T(G)$ são todos nós do tipo $P$. 
+ \end{theorem}  
+ 
+
+                                                                                                                    
+
+Caminhar na árvore binária em pós-ordem:
+\begin{itemize}
+    \item Caminhar na subárvore à esquerda, seguindo este caminho;
+    \item Caminhar na subárvore à direita, seguindo este caminho;
+    \item Visitar a raiz.
+    \item $(1,2,P,6,5,F,4,3,F,T,P,7,8,9,T,10,11,F,F,P,T)$
+\end{itemize}
+
+
+   
+   
+   
+   
+   
+   
+\newpage
+
+
+\section{COGRAFOS}
+
+Given two graphs $G_1=(V_1,E_1)$ and $G_2=(V_2,E_2)$, with $V_1\cap V_2=\emptyset$ the graph $G_1\cup G_2$ is the graph with vertex set $V_1\cup V_2$ and edge set $E_1\cup E_2$,and the graph $G_1+G_2$ (called the join of $G1$ and $G_2$) is the graph with vertex set $V_1\cup V_2$,and edge set $E1\cup E2 \cup\{(x,y)|x\in V_1,y\in V_2\}$. Cograph[5,20,21] is recursively defined as follows:
+\begin{itemize}
+    \item $K_1$ is a cograph;
+    \item if $G$ is a cograph then $\overline{G}$ is also a cograph;
+    \item if $G$ and $H$ are cographs ,then $G\cup H$ is also a cograph.
+    \item if $G$ and $H$ are cographs ,then $G+H$ is also a cograph.
+\end{itemize}
+In[5], Corneil et al. proved that a graph $G$ is a cograph if and only if $G$ contains no induced $P_4$(a chordless path with four vertices).It follows from the definition of cographs that every cograph $G$ is associated with a unique rooted tree $T(G)$,called the cotree of $G$,whose leaves are precisely the vertices of $G$ and whose internal nodes are of two types,0 or 1,in such away that two vertices $x$ and $y$ are adjacent in $G$ if and only if their lowest common ancestor in $T(G)$ is a type-1 node.
+
+
+\begin{figure}[!htb]
+        \centering
+    
+        \begin{tikzpicture}[scale=0.3]
+        \pgfsetlinewidth{1pt}
+        
+        \tikzset{
+            vertex/.style={circle,  draw, minimum size=10pt, inner sep=1pt}
+            }
+            
+           
+     \node [vertex,line width=2,color=black] (R) at (0,4.5){$1$};
+     
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+      \node [vertex,line width=2,color=black] (T10) at (2,0){$0$};
+             
+     \node [vertex,line width=2,color=black] (T11) at (4,-4){$u$};
+      \node [vertex,line width=2,color=black] (T12) at (8,-4){$v$};    
+      
+      \draw[-]  (R) to (T10);
+      \draw[-]  (T10) to (T11);
+      \draw[-]  (T10) to (T12);
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     
+ \node [vertex,line width=2,color=black] (T20) at (-2,0){$0$};
+             
+     \node [vertex,line width=2,color=black] (T21) at (-4,-4){$1$};
+      \node [vertex,line width=2,color=black] (T22) at (-12,-4){$1$}; 
+      
+        \draw[-]  (R) to (T20);
+      \draw[-]  (T20) to (T21);
+      \draw[-]  (T20) to (T22);   
+      
+     \node [vertex,line width=2,color=black] (T211) at (-2,-8){$w$};
+      \node [vertex,line width=2,color=black] (T212) at (-6,-8){$z$};  
+      
+      \draw[-]  (T21) to (T211);
+      \draw[-]  (T21) to (T212);
+     
+     
+      \node [vertex,line width=2,color=black] (T221) at (-10,-8){$x$};   
+      \node [vertex,line width=2,color=black] (T222) at (-12,-12){$y$}; 
+      \node [vertex,line width=2,color=black] (T223) at (-18,-12){$m$};
+      \node [vertex,line width=2,color=black] (T220) at (-14,-8){$0$};  
+      
+       \draw[-]  (T22) to (T221);
+       \draw[-]  (T22) to (T220);
+      \draw[-]  (T220) to (T222);
+       \draw[-]  (T220) to (T223);
+   
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5   
+ \node [vertex,line width=2,color=black] (u) at (-32,4.5){$u$};
+ \node [vertex,line width=2,color=black] (v) at (-28,4.5){$v$};
+  \node [vertex,line width=2,color=black] (z) at (-32,-12.5){$z$};
+ \node [vertex,line width=2,color=black] (w) at (-28,-12.5){$w$};
+        
+   \node [vertex,line width=2,color=black] (x) at (-36,-4){$x$};     
+        \node [vertex,line width=2,color=black] (y) at (-24,-6){$y$};   
+        \node [vertex,line width=2,color=black] (m) at (-24,-2){$m$};
+        
+        
+        
+         
+       \draw[-]  (u) to (x);
+       \draw[-]  (u) to (y);
+      \draw[-]  (u) to (m);
+       \draw[-]  (u) to (z);    
+          \draw[-]  (u) to (w); 
+        
+         \draw[-]  (v) to (x);
+       \draw[-]  (v) to (y);
+      \draw[-]  (v) to (m);
+       \draw[-]  (v) to (z);    
+          \draw[-]  (v) to (w); 
+        
+        
+           
+       \draw[-]  (m) to (x);
+      
+        \draw[-]  (y) to (x);
+    
+        \draw[-]  (z) to (w);
+        
+         \end{tikzpicture}
+         
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
+      \begin{itemize}
+          \item Dado quaisquer duas folhas $u,v$  da coarvore $T$ irmãs $N(u)-\{u,v\}=N(v)-\{u,v\}$. Se o pai de $u$ e $v$ for $0$ então $u$ e $v$ são independentes, se for $1$ são dependentes , ou seja existe $uv \in E(G)$.
+          
+          \item Dado quaisquer duas folhas $u,v$  da   sub-coarvore $S_T$ que os contem, vamos chamar de parentes. Se a raiz da sub-coarvore  de $u$ e $v$ for $0$ então $u$ e $v$ são independentes, se for $1$ são dependentes , ou seja existe $uv \in E(G)$. Exemplo $x$ e $m$ pertencem as mesma sub-coarvore de raiz $1$, portanto $x$ e $m$ são vizinhos em $G$, já $x$ e $z$ pertence a sub-coarvore de raiz $0$, ou seja $x$ e $z$ são independentes.
+      \end{itemize}  
+      
+      
+   \end{figure}
+   
+  \begin{theorem}
+   Se a coarvore $T$ tiver um conjunto de folhas irmas universais de tamanho k. Então, o conjunto de dupla dominação independente $S\subseteq V(G)$ de cardinalidade k. 
+  \end{theorem}       
+   \begin{proof}
+   Como o conjunto  $S_{iu}$  da coarvore $T$ de irmãs universais tem $N(u)-\{u,v\}= N(v)-\{u,v\}= N(G-S_iu)-\{u,v\}$ para quaisquer dois vértices em $S_{iu}$. Daí $S=S_iu$.
+   \end{proof}      
+
+
+ Assim fica fácil decidir se se uma sub-coárvore $S_T$ tem uma dupla dominação independente. Basta a sub-coárvore ter duas irmãs universais em relação a raiz de $S_T$. Exemplo, a Sub-coarvore com folhas $\{m,y,x\}$ de raiz 
+$1$ tem irmas $\{m,n\}$ universais, já a sub-coarvore de folhas $\{m,y,x,z,w\}$ de raiz $0$ não possui irmaes universais. 
+
+
+
+
+
+\begin{figure}[!htb]
+        \centering
+    
+        \begin{tikzpicture}[scale=0.3]
+        \pgfsetlinewidth{1pt}
+        
+        \tikzset{
+            vertex/.style={circle,  draw, minimum size=10pt, inner sep=1pt}
+            }
+            
+           
+     \node [vertex,line width=2,color=black] (R) at (0,4.5){$R$};
+     
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+      \node [vertex,line width=2,color=black] (T1) at (2,0){$0$};
+             
+     \node [vertex,line width=2,color=black] (T2) at (6,0){$0$};
+      \node [vertex,line width=2,color=black] (T3) at (10,0){$0$}; 
+        \node [vertex,line width=2,color=black] (T4) at (-10,0){$0$};
+      
+     \draw[-] (R) to (T1);
+     \draw[-] (R) to (T2);
+     \draw[-] (R) to (T3);
+     \draw[-] (R) to (T4);
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+             
+         \node [vertex,line width=2,color=black] (T11) at (2,-4){$S_{T1}$};
+             
+     \node [vertex,line width=2,color=black] (T12) at (6,-4){$S_{T2}$};
+      \node [vertex,line width=2,color=black] (T13) at (10,-4){$S_{T3}$}; 
+        \node [vertex,line width=2,color=black] (T14) at (-10,-4){$S_{Tn}$};
+      
+     \draw[-] (T11) to (T1);
+     \draw[-] (T12) to (T2);
+     \draw[-] (T13) to (T3);
+     \draw[-] (T14) to (T4);
+      
+    \end{tikzpicture}
+  
+   \end{figure}
+
+
+ \begin{theorem}
+    O conjunto $S$ é uma dupla dominação independente do cografo $G$, então $S=min\{S'_{Ti}\}$, onde  $S'_{Ti}$ é o menor conjunto de folhas independente  da subarvore $S_{Ti}$ de $T$  tamanho maior igual a 2, onde $S'_{Ti}$ seja um conjunto universal em relação a $S_{Ti}$.
+   \end{theorem} 
+      
+\begin{proof}
+Note que se a raiz da coarvore $R=1$, então $N(S'_{Ti})=V(G-S_{Ti})$. Temos que se a cardinalidade de $S'_{Ti}$ deve ter cardinalidade mínima em $G$ de tamanho pelo menos 2, isto é $G-S_{Ti}$ é duplamente dominado por  $S'_{T}$. Agora, basta que $S'_{Ti}$ seja uma dupla dominação independente de $S_{Ti}$.
+\end{proof}{}
+
+É fácil ver que se G for desconexo , $S$ será a soma dos subconjuntos descritos no teorema anterior.
+
+
+\section{P4-ESPARSO}
+The graph $G$  is $P4-sparse$ if no five vertices in $G$ induce more than one $P_4$.
+
+\begin{theorem}
+ Let $G_4$ be a graph. Then $G$ is a $P_4-sparse$ graph if and only if for every induced subgraph $H$ of $G$, exactly one of the following statements is satisfied: (1) $H$ is disconnected;$(2)$ $H$ is disconnected;(3) $H$ is isomorphic to a spider.
+
+\end{theorem}
+.
+
+By Theorem 1, a remarkable feature of $P4-sparse$  graphs is that they admit a tree representation unique up to isomorphism, called ps-tree. The ps-tree $T(G)$ of a $P4-sparse$ graph $G$ is defined as follows.
+
+Each internal node of $T(G)$ is of type 0,1 or 2. The leaves of $T(G)$ are the vertices of $G$. The subtree rooted at each node $X$ of $T(G)$ corresponds to the induced subgraph of $G$ defined by the subset of leaves that are descendants of $X$. A subtree roote data type-0 node corresponds to the union of the subgraphs defined by the children of that node. A subtree roote data type-1 node corresponds to the join of the subgraphs defined by the children of that  node. (Observe that type-0 and type-1 nodes have thes a memeaning asin cotrees.) A subtree roote data type-2 node corresponds to a spider subgraph of $G$.
+
+
+\subsection{GRAFO ARANHA E JOIN GRAPH}
+Um grafo $G$ é um grafo aranha se $V(G)$ admite uma partição de conjuntos $K,S$ e $R$ tais que:
+
+\begin{enumerate}
+    \item $K$ é uma clique e $S$ é um conjunto estável e $|K|=|S|\geq2$;
+    \item Todo vértice de $R$ é ajacente a todos os vértices de $K$, mas nenhum vértice de $S$;
+    \item Existe uma bijeção de $S$ em $K$, talque todo vértice $x \in S$, ou $N(x)=\{f(x)\}$ ou $N(x)=K- \{f(x)\}$.
+\end{enumerate}
+
+Seja $G$ uma aranha compartições $(K, S, R)$. No caso em que $N(x) = f(x)$,  $G$ é chamada aranha magra,  caso contrário , $G$ é chamada aranha gorda.
+
+Observemos que o complemento de uma aranha magra é uma aranha gorda e vice-versa, isto é , $G$ é uma aranha magra se,e somente se, $\overline{G}$ é uma aranha gorda.
+
+
+Dada uma aranha magra $G$ compartições $(K, S, R)$, enfatizamos que cada vértice $x_i$ de $S$ é adjacente apenas ao vértice $y_i=f(x_i)$ correspondente. E,no caso da aranha gorda,cada vértice $x_i$ de $S$ não é adjacente ao vértice $y_i=f(x_i)$ correspondente e nem aos vértices de $R$.
+
+\begin{theorem}\cite{leonida2018independent}
+ Let $G$ and $H$ be graphs.  Then $i_2(G+H) = min\{i_2(G),i_2(H)\}$.
+\end{theorem}
+
+\begin{corollary}
+ Let $G$ and $H$ be graphs, talque $H$ é uma clique.  Then $i_2(G+H) = min\{i_2(G)\}$.
+\end{corollary}
+
+\begin{proof}\label{teo10}
+Como $i_2(H)=\emptyset$, pois uma clique não pode ser dupla dominada independentemente.
+\end{proof}
+
+\begin{theorem}
+ É NP-completo decidir se o grafo $G+H$ possui uma dupla dominação independente , caso $H$ seja uma clique e $G$ grafo planar. 
+\end{theorem}
+
+\begin{proof}
+Basta aplicar o Teorema \ref{teo10} e \ref{teo1}.
+\end{proof}
+
+\begin{theorem}
+
+É NP-completo decidir se o grafo aranha $G$ possui uma dupla dominação independente, para $R$ grafo qualquer. E é polinomial se para $R$ for polinomial. 
+
+\end{theorem}
+
+
+
+\begin{corollary}
+  É NP-completo decidir se o grafo $P_5-free$ possui uma dupla dominação independente.  Pois 
+  Every connected -free graph has either a dominating clique or a dominating . clique dominante.J. Liu, H. Zhou Dominating subgraphs in graphs with some forbidden structures.
+\end{corollary}
+
+\begin{proof}
+Basta aplicar o Teorema \ref{teo10} e \ref{teo1}. 
+ $i_2(G) = i_2(R)+i_2(S)$ se aranha for magra e $i_2(G) = i_2(R)+i_2(\overline{K})$ se aranha for gorda.
+\end{proof}
+
+
+
+
+
+\begin{figure}[!htb]
+        \centering
+    
+        \begin{tikzpicture}[scale=0.3]
+        \pgfsetlinewidth{1pt}
+        
+        \tikzset{vertex/.style={circle,  draw, minimum size=13pt, inner sep=0pt}}
+        
+     
+
+       
+         \begin{scope}
+            \node [vertex] (v1) at (-20,0){$y_1$};
+            \node [vertex] (v2) at (-20,4){$y_2$};
+            \node [vertex] (v3) at (-12,0){$y_3$};
+            \node [vertex] (v4) at (-12,4){$y_4$};
+            \node [vertex] (v5) at (-16,8){$y_5$};
+             \node [vertex] (v6) at (-16,-4){$y_6$};
+            
+           \draw[-] (v1) to (v2);
+           \draw[-] (v1) to (v3);
+           \draw[-] (v1) to (v4);
+           \draw[-] (v1) to (v5);
+           \draw[-] (v1) to (v6);
+           
+            \draw[-] (v2) to (v3);
+           \draw[-] (v2) to (v4);
+           \draw[-] (v2) to (v5);
+           \draw[-] (v2) to (v6);
+           
+         
+           \draw[-] (v3) to (v4);
+           \draw[-] (v3) to (v5);
+           \draw[-] (v3) to (v6);
+           
+           
+           \draw[-] (v4) to (v5);
+           \draw[-] (v4) to (v6);
+           
+           \draw[-] (v5) to (v6);
+           
+         \node [vertex,red] (v7) at (0,3){$r_1$};
+            \draw[-] (v7) to (v1);
+            \draw[-] (v7) to (v2);
+           \draw[-] (v7) to (v3);
+           \draw[-] (v7) to (v4);
+           \draw[-] (v7) to (v5);
+           \draw[-] (v7) to (v6);
+           
+           
+           
+           \node [vertex,red] (u1) at (-20,-7){$x_1$};
+            \node [vertex,red] (u2) at (-20,11){$x_2$};
+            \node [vertex,red] (u3) at (-12,-7){$x_3$};
+            \node [vertex,red] (u4) at (-12,11){$x_4$};
+            \node [vertex,red] (u5) at (-16,13){$x_5$};
+             \node [vertex,red] (u6) at (-16,-13){$x_6$};
+           
+           \draw[-] (v1) to (u1);
+            \draw[-] (v2) to (u2);
+           \draw[-] (v3) to (u3);
+           \draw[-] (v4) to (u4);
+           \draw[-] (v5) to (u5);
+            \draw[-] (v6) to (u6);
+        \end{scope}
+   
+      
+    
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \end{tikzpicture}
+    \caption []{Grafo Aranha magra}
+    \label{figura1}
+\end{figure}
+
+
+
+\begin{figure}[!htb]
+        \centering
+    
+        \begin{tikzpicture}[scale=0.3]
+        \pgfsetlinewidth{1pt}
+        
+        \tikzset{vertex/.style={circle,  draw, minimum size=13pt, inner sep=0pt}}
+        
+     
+
+       
+         \begin{scope}
+            \node [vertex,red] (v1) at (-40,0){$y_1$};
+            \node [vertex,red] (v2) at (-40,4){$y_2$};
+            \node [vertex,red] (v3) at (-32,0){$y_3$};
+            \node [vertex,red] (v4) at (-32,4){$y_4$};
+            \node [vertex,red] (v5) at (-36,8){$y_5$};
+             \node [vertex,red] (v6) at (-36,-4){$y_6$};
+            
+           \draw[-] (u1) to (u2);
+           \draw[-] (u1) to (u3);
+           \draw[-] (u1) to (u4);
+           \draw[-] (u1) to (u5);
+           \draw[-] (u1) to (u6);
+           
+            \draw[-] (u2) to (u3);
+           \draw[-] (u2) to (u4);
+           \draw[-] (u2) to (u5);
+           \draw[-] (u2) to (u6);
+           
+         
+           \draw[-] (u3) to (u4);
+           \draw[-] (u3) to (u5);
+           \draw[-] (u3) to (u6);
+           
+           
+           \draw[-] (u4) to (u5);
+           \draw[-] (u4) to (u6);
+           
+           \draw[-] (u5) to (u6);
+           
+         \node [vertex,red] (v7) at (-5,3){$r_1$};
+            \draw[-] (v7) to (u1);
+            \draw[-] (v7) to (u2);
+           \draw[-] (v7) to (u3);
+           \draw[-] (v7) to (u4);
+           \draw[-] (v7) to (u5);
+           \draw[-] (v7) to (u6);
+           
+           
+           
+           \node [vertex] (u1) at (-20,-7){$x_1$};
+            \node [vertex] (u2) at (-20,11){$x_2$};
+            \node [vertex] (u3) at (-12,-7){$x_3$};
+            \node [vertex] (u4) at (-12,11){$x_4$};
+            \node [vertex] (u5) at (-16,13){$x_5$};
+             \node [vertex] (u6) at (-16,-13){$x_6$};
+           
+          
+           \draw[-] (v1) to (u2);
+           \draw[-] (v1) to (u3);
+           \draw[-] (v1) to (u4);
+           \draw[-] (v1) to (u5);
+           \draw[-] (v1) to (u6);
+           
+            \draw[-] (v2) to (u1);
+           \draw[-] (v2) to (u3);
+           \draw[-] (v2) to (u4);
+           \draw[-] (v2) to (u5);
+           \draw[-] (v2) to (u6); 
+            
+            
+             \draw[-] (v3) to (u1);
+           \draw[-] (v3) to (u2);
+           \draw[-] (v3) to (u4);
+           \draw[-] (v3) to (u5);
+           \draw[-] (v3) to (u6); 
+           
+             \draw[-] (v4) to (u1);
+           \draw[-] (v4) to (u2);
+           \draw[-] (v4) to (u3);
+           \draw[-] (v4) to (u5);
+           \draw[-] (v4) to (u6);
+           
+             \draw[-] (v5) to (u1);
+           \draw[-] (v5) to (u2);
+           \draw[-] (v5) to (u4);
+           \draw[-] (v5) to (u3);
+           \draw[-] (v5) to (u6);
+           
+             \draw[-] (v6) to (u1);
+           \draw[-] (v6) to (u2);
+           \draw[-] (v6) to (u4);
+           \draw[-] (v6) to (u5);
+           \draw[-] (v6) to (u4);
+           
+           
+           
+           
+           
+           
+           
+            
+        \end{scope}
+   
+      
+    
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \end{tikzpicture}
+    \caption []{Grafo Aranha gorda}
+    \label{figura1}
+\end{figure}
+
+
+
+
+\newpage
+
+
+
+
+\newpage
+
+\section{PRISMAS COMPLEMENTARES}
+Let a graph $G=(V(G),E(G))$, the complementary prism
+of $G$ is the graph denoted by $G\overline{G}$ with vertex set $V(G\overline{G}) = \{v_1, . . . , v_n\} \cup \{v_1, . . . , v_n\}$ and edge set $E(G\overline{G}) = E(G)\cup \{v_iv_j : 1\leq i < j \leq n $ and $ v_iv_j \in E(G)\} \cup \{v_1v_1, . . . , v_nv_n\}$.
+Let $G$ be a graph and $\overline{G}$ its complement. For every vertex $v \in V (G)$ we denote $v' \in V (\overline{G})$ as its corresponding vertex. 
+
+
+
+
+\begin{figure}[h]
+    \centering
+
+\begin{tikzpicture}[scale=1]
+
+\pgfsetlinewidth{1pt}
+
+\tikzset{
+    vertex/.style={circle,  draw, minimum size=5pt, inner sep=0pt}}
+
+
+\node [vertex] (u1) at (-7,3) [label=right:$v_1$]{};
+\node [vertex] (u2) at (-6,1) [label=right:$v_2$]{} edge (u1);
+\node [vertex] (u3) at (-8,1) [label=left:$v_3$]{} edge (u1) edge (u2);
+
+\node [vertex] (u'1) at (-7,5) [label=right:$\overline{v_1}$]{}
+edge(u1);
+
+\node [vertex] (u'2) at (-6,3) [label=right:$\overline{v_2}$]{} 
+edge(u2);
+\node [vertex] (u'3) at (-8,3) [label=left:$\overline{v_3}$]{} 
+edge(u3);
+
+
+
+
+\node [vertex] (w1) at (-3,3) [label=left:$v_1$]{};
+\node [vertex] (w2) at (-1,1) [label=right:$v_2$]{} edge (w1);
+\node [vertex] (w3) at (-4,1) [label=left:$v_3$]{} edge (w1) edge (w2);
+\node [vertex] (w4) at (0,3) [label=right:$v_4$]{} edge (w1) edge (w2) edge(w3);
+
+
+
+\node [vertex] (w'1) at (-3,5) [label=right:$\overline{v_1}$]{}
+edge(w1);
+
+\node [vertex] (w'2) at (-1,4) [label=right:$\overline{v_2}$]{} 
+edge(w2);
+\node [vertex] (w'3) at (-4,3) [label=left:$\overline{v_3}$]{} 
+edge(w3);
+\node [vertex] (w'4) at (0,5) [label=right:$\overline{v_4}$]{} edge (w4);
+
+
+
+
+\node [vertex] (k1) at (3,3) [label=left:$v_1$]{};
+\node [vertex] (k2) at (5,1) [label=right:$v_2$]{} edge (k1);
+\node [vertex] (k3) at (2,1) [label=left:$v_3$]{} edge (k1) edge (k2);
+\node [vertex] (k4) at (6,3) [label=right:$v_4$]{} edge (k1) edge (k2) edge(k3);
+\node [vertex] (k5) at (4.5,3.8) [label=right:$v_5$]{} edge (k1) edge (k2) edge(k3) edge(k4);
+
+
+\node [vertex] (k'1) at (3,5) [label=right:$\overline{v_1}$]{}
+edge(k1);
+
+\node [vertex] (k'2) at (5,4) [label=right:$\overline{v_2}$]{} 
+edge(k2);
+\node [vertex] (k'3) at (2,3) [label=left:$\overline{v_3}$]{} 
+edge(k3);
+\node [vertex] (k'4) at (6,5) [label=right:$\overline{v_4}$]{} edge (k4);
+\node [vertex] (k'5) at (4.5,5.8) [label=right:$\overline{v_5}$]{} edge(k5);
+
+
+
+
+
+\end{tikzpicture}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+\begin{figure}[h]
+    \centering
+
+\begin{tikzpicture}[scale=1]
+
+\pgfsetlinewidth{1pt}
+
+\tikzset{
+    vertex/.style={circle,  draw, minimum size=5pt, inner sep=0pt}}
+
+
+\node [vertex] (u1) at (-8,3) [label=left:$v_1$]{};
+\node [vertex] (u2) at (-6,1) [label=right:$v_2$]{};
+\node [vertex] (u3) at (-9,1) [label=left:$v_3$]{} edge (u1) edge (u2);
+\node [vertex] (u4) at (-5,3) [label=right:$v_4$]{} edge (u1) edge (u2);
+
+\node [vertex] (u'1) at (-7.5,2.5) [label=left:$\overline{v_1}$]{}
+edge(u1);
+
+\node [vertex] (u'2) at (-6.5,1.5) [label=right:$\overline{v_2}$]{}
+edge(u2)edge(u'1);
+\node [vertex] (u'3) at (-8.0,1.5) [label=left:$\overline{v_3}$]{}
+edge(u3);
+\node [vertex] (u'4) at (-6,2.5) [label=right:$\overline{v_4}$]{} 
+edge(u4) edge(u'3);
+
+
+
+
+
+\node [vertex] (w1) at (-3,3) [label=left:$v_1$]{};
+\node [vertex] (w2) at (-1,1) [label=right:$v_2$]{};
+\node [vertex] (w3) at (-4,1) [label=left:$v_3$]{} edge (w1) edge (w2);
+\node [vertex] (w4) at (0,3) [label=right:$v_4$]{}  edge (w2);
+\node [vertex] (w5) at (-1.3,4) [label=right:$v_5$]{} edge (w1) edge (w4);
+
+
+
+
+\node [vertex] (w'1) at (-2.5,2.5) [label=left:$\overline{v_1}$]{}
+edge(w1);
+
+\node [vertex] (w'2) at (-1.5,1.5) [label=right:$\overline{v_2}$]{}
+edge(w2)edge(w'1);
+\node [vertex] (w'3) at (-3.0,1.5) [label=left:$\overline{v_3}$]{}
+edge(w3);
+\node [vertex] (w'4) at (-1,2.5) [label=right:$\overline{v_4}$]{} 
+edge(w4) edge(w'3) edge(w'1);
+\node [vertex] (w'5) at (-1.6,3) [label=right:$\overline{v_5}$]{} edge (w'3) edge (w'2)edge (w5);
+
+
+
+
+
+\node [vertex] (k1) at (2,3) [label=left:$v_1$]{};
+\node [vertex] (k2) at (4,1) [label=right:$v_2$]{};
+\node [vertex] (k3) at (1,1) [label=left:$v_3$]{} edge (k1);
+\node [vertex] (k4) at (5,3) [label=right:$v_4$]{}  edge (k2);
+\node [vertex] (k5) at (4.3,4) [label=right:$v_5$]{} edge (k1) edge (k4);
+\node [vertex] (k6) at (1.6,0) [label=right:$v_6$]{} edge (k3) edge (k2);
+
+
+
+\node [vertex] (k'1) at (2.5,2.5) [label=left:$\overline{v_1}$]{}edge (k1);
+
+\node [vertex] (k'2) at (3.5,1.5) [label=right:$\overline{v_2}$]{}edge (k2)
+edge (k'1);
+\node [vertex] (k'3) at (2.0,1.5) [label=left:$\overline{v_3}$]{}edge (k3)
+edge (k'2) ;;
+\node [vertex] (k'4) at (4,2.5) [label=right:$\overline{v_4}$]{}edge (k4) 
+edge (k'1) edge (k'3) ;
+\node [vertex] (k'5) at (3.6,3) [label=right:$\overline{v_5}$]{}edge (k5) 
+edge (k'3) edge (k'2) ;
+
+\node [vertex] (k'6) at (2.5,1) [label=right:$\overline{v_6}$]{} edge (k6)
+edge (k'1) edge (k'5) edge (k'4);
+\end{tikzpicture}
+\end{figure}
+
+
+
+
+
+
+
+
+\begin{figure}[h]
+    \centering
+
+\begin{tikzpicture}[scale=0.3]
+
+\pgfsetlinewidth{1pt}
+
+\tikzset{
+    vertex/.style={circle,  draw, minimum size=3pt, inner sep=0pt}}
+
+\draw (-6,12) node[above] {$G$};
+\draw (10,12) node[above] {$\overline{G}$};
+\draw[] (-6,8) ellipse (3.5cm and 5.5cm);
+\draw[] (10,8) ellipse (3.5cm and 5.5cm);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\node [vertex,red] (w1) at (-6,10) [label=left:$w_1$]{};
+\node [vertex] (w2) at (-6,8) [label=left:$w_2$]{};
+\node [vertex] (w3) at (-6,6) [label=left:$w_3$]{};
+\node [vertex,red] (w4) at (-3,7) [label=above:$w_4$]{};
+\node [vertex,red] (w5) at (-6,4) [label=left:$w_5$]{};
+
+\draw [-] (w1) to (w2);
+\draw [-] (w2) to (w3);
+\draw [-] (w2) to (w4);
+\draw [-] (w3) to (w4);
+\draw [-] (w3) to (w5); 
+
+\node [vertex] (w1') at (10,10) [label=right:$\overline{w_1}$]{};
+\node [vertex] (w2') at (12,8) [label=right:$\overline{w_2}$]{};
+\node [vertex] (w3') at (12,6) [label=right:$\overline{w_3}$]{};
+\node [vertex] (w4') at (8,7) [label=right:$\overline{w_4}$]{};
+\node [vertex] (w5') at (10,4) [label=right:$\overline{w_5}$]{};
+
+\draw [-] (w1) to (w1');
+\draw [-] (w2) to (w2');
+\draw [-] (w3) to (w3');
+\draw [-] (w4) to (w4');
+\draw [-] (w5) to (w5'); 
+
+
+\draw [-] (w1') to (w3');
+\draw [-] (w1') to (w4');
+\draw [-] (w1') to (w5');
+\draw [-] (w2') to (w5');
+\draw [-] (w4') to (w5');
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\draw[] (-6,5) ellipse (5.5cm and 16cm);
+\draw (-6,15) node[above] {$H$};
+\draw[] (10,5) ellipse (5.5cm and 16cm);
+\draw (10,15) node[above] {$\overline{H}$};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\node [vertex,red] (u) at (-6,0) [label=left:$u$]{};
+\node [vertex] (u') at (-6,-2) [label=left:$u'$]{};
+\node [vertex,white] (z) at (10,0.5) [label=left:]{};
+
+
+
+
+
+\node [vertex] (u1) at (11,0) [label=right:$\overline{u}$]{};
+\node [vertex,red] (u1') at (8,-2) [label=right:$\overline{u'}$]{};
+
+\node [vertex] (v) at (-6,-4) [label=left:$v$]{};
+\node [vertex,red] (v') at (8,-4) [label=right:$\overline{v}$]{};
+
+\node [vertex,red] (v1) at (-6,-6) [label=left:$v'$]{};
+\node [vertex] (v1') at (11,-6) [label=right:$\overline{v'}$]{};
+
+
+\draw [-] (u) to (u');
+\draw [-] (u1) to (u);
+\draw [-] (u1') to (u');
+\draw [-] (v) to (u');
+\draw [-] (v) to (v');
+\draw [-] (v1) to (v);
+\draw [-] (v1) to (v1');
+\draw [-] (v1') to (u1);
+\draw [-] (v1') to (u1');
+\draw [-] (v1') to (u1);
+\draw [-] (v') to (u1);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\draw [dashed] (z) to (w1');
+\draw [dashed] (z) to (w2');
+\draw [dashed] (z) to (w3');
+\draw [dashed] (z) to (w4');
+\draw [dashed] (z) to (w5');
+
+
+\draw[dashed] (10,-4) ellipse (3.5cm and 5.5cm);
+
+
+
+
+
+
+
+\end{tikzpicture}
+
+    \caption{Reduction from {\sc dupla dominating independente} in planar graph  to {\sc dupla dominating independente } of prismas complementares graphs.}, . \label{PRISMA}
+\end{figure}
+
+
+\newpage
+
+\begin{theorem}
+ Saber se existe uma dupla dominação independente em prismas complementares é NP-completo.
+\end{theorem}
+
+\begin{proof}
+
+
+
+Em vista da NP-completude do problema de decidir se dado um grafo planar $G$ existe  dupla dominação independente para $V(G)$, ser NP-completo.
+Como entrada considere o grafo planar $G=(V(G),E(G))$ e o caminho $P=uu'vv'$. Considere o grafo desconexo $H=G\cup M$, cujos vértices $V(H)=V(G)\cup V(P)$, veja Figura \ref{PRISMA}. Vamos mostrar que  $G$ possui uma dupla dominação  independente $S$ se e somente se , o grafo prisma complementar $H\overline{H}$ possui uma dupla dominação $S=S\cup\{u,v',\overline{u'},\overline{u'}\}$.
+
+Sabemos por definição de prisma complementar que  $V(H\overline{H})=V(G\overline{G})\cup V(P\overline{P})$.
+
+É fácil ver que o conjunto  $\{u,v',\overline{u'},\overline{u'}\}$ é uma dupla dominação independente do prisma complementar $P\overline{P}$. Podemos ver também que por definição de prisma complementar que para todos os vértices $w \in V(\overline{P})$, $N(w)=V(\overline{G})$. Daí $\{\overline{u'},\overline{u'}\}$ dupla domina de maneira independente $V(\overline{G})$. Podemos concluir $S=S\cup\{u,v',\overline{u'},\overline{u'}\}$ dupla domina independentemente $V(H\overline{H})$,já que por hipótese $S$ dupla domina $V(G)$.
+
+Por outro, suponha que $H\overline{H}$ não possui uma dupla dominação independente. Vamos mostrar que $G$ também não possui. Basta supor que existem vértices em $V(\overline{G})$ no conjunto de dupla dominação independente, então não pode existir vértices de $V(\overline{P})$ como já visto anteriormente. Ora com isso garantismo que $H\overline{H}$ e que como existem vértices  $V(\overline{G})$ no conjunto de dupla dominação independente de $V(G)$, $S$ caso exista não seria um subconjunto de $G$, uma contradição.
+
+\end{proof}
+
+\newpage
+
+\section{PRODUTO FORTE ENTRE GRAFOS}
+Sejam os grafos $G_1 = (V_1,E_1)$ e $G_2 = (V_2,E_2)$ tais que $(u_1,...,u_n)$ são os vértices de $G_1$ e $(v_1,...,v_m)$ são os vértices de $G_2$ . O produto forte entre $G_1$ e $G_2$, denotado por $G_1\otimes G_2$, tem conjunto de vértices $V = V_1xV_2$ e $(u_i,v_j)$ é adjacente a $(u_l,v_p)$ se $u_i = u_l$ e $v_j$ é adjacente a $v_p$ em $G_2$, ou $v_j = v_p$ e $u_i$ é adjacente a $u_l$ em $G_1$, ou $u_i$ é adjacente a $u_l$ em $G_1$ e $v_j$ é adjacente a $v_p$ em $G_2$.
+
+
+
+\begin{figure}[!htb]
+        \centering
+    
+        \begin{tikzpicture}[scale=0.35]
+        \pgfsetlinewidth{1pt}
+        
+        %\tikzset{vertex/.style={circle,  draw, minimum size=13pt, inner sep=0pt}}
+        
+       
+   
+       \begin{scope}
+            
+            \node [vertex,label=$u_1$] (u1) at (-28,6){};
+            \node [vertex,label=$u_2$] (u2) at (-26,6){};
+            \node [vertex,label=$u_3$] (u3) at (-24,6){};
+            \node [vertex,label=$u_4$] (u4) at (-22,6){};
+            
+           
+             \draw[-] (u1) to (u2);
+             \draw[-] (u2) to (u3);
+             \draw[-] (u3) to (u4);
+             
+        \end{scope}
+    
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        \begin{scope}
+            
+            \node [vertex,label=right:$v_1$] (v1) at (-16,8){};
+            \node [vertex,label=right:$v_2$] (v2) at (-16,6){};
+            \node [vertex,label=right:$v_3$] (v3) at (-16,4){};
+           
+           
+             \draw[-] (v1) to (v2);
+             \draw[-] (v2) to (v3);
+             
+             
+        \end{scope}
+        
+        
+         \begin{scope}
+            
+            \node [vertex,label=above:$(u_1v_1)$] (u1v1) at (-6,8){};
+            \node [vertex,label=left:$(u_1v_2)$] (u1v2) at (-6,4){};
+            \node [vertex,label=below:$(u_1v_3)$] (u1v3) at (-6,0){};
+             
+             
+            \node [vertex,label=above:$(u_2v_1)$] (u2v1) at (2,8){};
+            \node [vertex,label=left:$(u_2v_2)$] (u2v2) at (2,4){};
+            \node [vertex,label=below:$(u_2v_3)$] (u2v3) at (2,0){};  
+             
+             
+             \node [vertex,label=above:$(u_3v_1)$] (u3v1) at (10,8){};
+            \node [vertex,label=right:$(u_3v_2)$] (u3v2) at (10,4){};
+            \node [vertex,label=below:$(u_3v_3)$] (u3v3) at (10,0){};  
+             
+              \node [vertex,label=above:$(u_4v_1)$] (u4v1) at (18,8){};
+            \node [vertex,label=right:$(u_4v_2)$] (u4v2) at (18,4){};
+            \node [vertex,label=below:$(u_4v_3)$] (u4v3) at (18,0){};  
+             
+             
+           \draw[-] (u1v1) to (u1v2); 
+           \draw[-] (u1v2) to (u1v3);   
+           
+           
+            \draw[-] (u2v1) to (u2v2); 
+           \draw[-] (u2v2) to (u2v3);
+           
+            \draw[-] (u3v1) to (u3v2); 
+           \draw[-] (u3v2) to (u3v3);
+           
+            \draw[-] (u4v1) to (u4v2); 
+           \draw[-] (u4v2) to (u4v3);
+           
+           
+           
+           \draw[-] (u1v1) to (u2v1); 
+           \draw[-] (u2v1) to (u3v1);   
+           \draw[-] (u3v1) to (u4v1);  
+           
+            \draw[-] (u1v2) to (u2v2); 
+           \draw[-] (u2v2) to (u3v2);   
+           \draw[-] (u3v2) to (u4v2); 
+           
+            \draw[-] (u1v3) to (u2v3); 
+           \draw[-] (u2v3) to (u3v3);   
+           \draw[-] (u3v3) to (u4v3); 
+           
+            \draw[-] (u1v1) to (u2v2); 
+            \draw[-] (u2v1) to (u1v2);
+             
+             
+               \draw[-] (u1v2) to (u2v3); 
+            \draw[-] (u2v2) to (u1v3);
+             
+               \draw[-] (u2v1) to (u3v2); 
+            \draw[-] (u3v1) to (u2v2);
+            
+            
+            
+             \draw[-] (u3v1) to (u4v2); 
+            \draw[-] (u4v1) to (u3v2);
+             
+             
+               \draw[-] (u2v2) to (u3v3); 
+            \draw[-] (u3v2) to (u2v3);
+             
+               \draw[-] (u3v2) to (u4v3); 
+            \draw[-] (u4v2) to (u3v3);
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+             
+        \end{scope}
+        
+        
+        
+        
+        
+
+    \end{tikzpicture}
+    \caption []{Não possui uma dupla dominação independente os ciclos impares e caminhos pares}
+    \label{figura1}
+\end{figure}
+
+
+
+
+
+
+
+\section{Grafo de Permutação}
+
+Seja a sequência $P=[P_1,P_2,..,P_n]$ a permutação dos números 1,2,...,n. Então o grafo de permutação de $P$, $G(P)$ é definido da seguinte maneira:
+
+\begin{itemize}
+    \item $V(G)=\{1,2,3,...,n\}$
+    \item $E(G)=\{(i,j)|(i-j)(P^{-1}_i-P^{-1}_j)<0\}$
+\end{itemize}
+$P^{-1}_i$ é a posição do na sequência onde número $i$ pode ser encontrado. 
+
+Algoritmo dupla dominação independente
+
+\begin{itemize}
+    \item Entrada $P=[P_1,P_2,..,P_n]$ e $V(G)=\{1,2,3,...,n\}$.
+    \item Faça $S=\emptyset$
+    \item Teste 1. Encontrar os vértices simpliciais.
+    \item Para todo vértice $v\in V(G)$. Para todo $i,j \in N(v)$ verificar se $(i-j)(P^{-1}_i-P^{-1}_j)<0$.
+    \item Se $v$ verificar o teste 1.  $S=\emptyset$ recebe $v$ e $N(v)\cap S=\emptyset$
+    \item Faça $G-N(v)$ para todo $v$ simplicial.
+    \item 
+    \item
+    \item
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    \item
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+ \begin{figure}[!htb]
+        \centering
+    
+        \begin{tikzpicture}[scale=0.25]
+        \pgfsetlinewidth{1pt}
+        
+        \tikzset{
+            vertex/.style={circle,  draw, minimum size=8pt, inner sep=0pt}
+            }
+            
+                     
+          
+           
+          
+           
+            \begin{scope}[shift={(-8,0)}]
+            \node [vertex][red] (x4) at (-12,-18){$\overline{x}$};
+            \node [vertex] (x5) at (-8.5,-11.5){$x$};
+            \node [vertex][red] (x6) at (-1.5,-11.5){$\overline{x}$};
+            \node [vertex] (x7) at (2,-17.8){${x}$};
+            \node [vertex][red] (x8) at (-1.5,-11.5){$\overline{x}$};
+            \node [vertex] (x9) at (-8.5,-25.5){${x}$};
+            \node [vertex][red] (x10) at (-1.5,-25.5){$\overline{x}$};
+          
+            \node [vertex] (x11) at (-10.9,-15.5){};
+            \node [vertex][red] (x12) at (-9.8,-13.5){};
+             \node [vertex] (x13) at (-11,-20.5){};
+            \node [vertex][red] (x14) at (-10,-23){}; 
+          
+            \node [vertex][red] (x15) at (-6,-25.5){};
+            \node [vertex] (x16) at (-4,-25.5){}; 
+            
+            \node [vertex][red] (x17) at (-6,-11.5){};
+            \node [vertex] (x18) at (-4,-11.5){}; 
+            
+            \node [vertex] (x19) at (0,-13.5){};
+            \node [vertex][red] (x20) at (1,-15.5){}; 
+          
+            
+            \node [vertex][red] (x21) at (1.5,-20.5){};
+            \node [vertex] (x22) at (0.4,-23){};
+          
+           \draw[-] (x4) to (x11);
+          \draw[-] (x11) to (x12);
+          \draw[-] (x12) to (x5);
+          \draw[-] (x5) to (x17);
+          \draw[-] (x17) to (x18);
+          \draw[-] (x18) to (x8);
+          \draw[-] (x8) to (x19);
+          \draw[-] (x19) to (x20);
+          \draw[-] (x20) to (x7);
+          \draw[-] (x7) to (x21);
+          \draw[-] (x21) to (x22);
+          \draw[-] (x22) to (x10);
+          \draw[-] (x10) to (x16);
+          \draw[-] (x16) to (x15);
+          \draw[-] (x15) to (x9);
+          \draw[-] (x9) to (x14);
+          \draw[-] (x14) to (x13);
+          \draw[-] (x13) to (x4);
+          \draw[-] (x12) to (x17);
+          \draw[-] (x18) to (x19);
+          \draw[-] (x20) to (x21);
+          \draw[-] (x22) to (x16);
+          \draw[-] (x15) to (x14);
+          \draw[-] (x13) to (x11);
+          
+     
+          
+          
+          \end{scope}
+          
+         
+          
+          
+          
+          \begin{scope}[shift={(10,0)}]
+            \node [vertex][red] (u4) at (-12,-18){${z}$};
+            \node [vertex][red] (u5) at (-8.5,-11.5){$\overline{z}$};
+            \node [vertex][red] (u6) at (-1.5,-11.5){${z}$};
+            \node [vertex][red] (u7) at (2,-17.8){$\overline{z}$};
+            \node [vertex][red] (u8) at (-1.5,-11.5){${z}$};
+            \node [vertex][red] (u9) at (-8.5,-25.5){$\overline{z}$};
+            \node [vertex][red] (u10) at (-1.5,-25.5){${z}$};
+          
+            \node [vertex][red] (u11) at (-10.9,-15.5){};
+            \node [vertex][] (u12) at (-9.8,-13.5){};
+             \node [vertex][] (u13) at (-11,-20.5){};
+            \node [vertex][red] (u14) at (-10,-23){}; 
+          
+            \node [vertex][] (u15) at (-6,-25.5){};
+            \node [vertex][red] (u16) at (-4,-25.5){}; 
+            
+            \node [vertex][red][] (u17) at (-6,-11.5){};
+            \node [vertex] (u18) at (-4,-11.5){}; 
+            
+            \node [vertex][red] (u19) at (0,-13.5){};
+            \node [vertex] (u20) at (1,-15.5){}; 
+          
+            
+            \node [vertex][red] (u21) at (1.5,-20.5){};
+            \node [vertex] (u22) at (0.4,-23){};
+          
+           \draw[-] (u4) to (u11);
+          \draw[-] (u11) to (u12);
+          \draw[-] (u12) to (u5);
+          \draw[-] (u5) to (u17);
+          \draw[-] (u17) to (u18);
+          \draw[-] (u18) to (u8);
+          \draw[-] (u8) to (u19);
+          \draw[-] (u19) to (u20);
+          \draw[-] (u20) to (u7);
+          \draw[-] (u7) to (u21);
+          \draw[-] (u21) to (u22);
+          \draw[-] (u22) to (u10);
+          \draw[-] (u10) to (u16);
+          \draw[-] (u16) to (u15);
+          \draw[-] (u15) to (u9);
+          \draw[-] (u9) to (u14);
+          \draw[-] (u14) to (u13);
+          \draw[-] (u13) to (u4);
+          \draw[-] (u12) to (u17);
+          \draw[-] (u18) to (u19);
+          \draw[-] (u20) to (u21);
+          \draw[-] (u22) to (u16);
+          \draw[-] (u15) to (u14);
+          \draw[-] (u13) to (u11);
+         
+          
+          
+                \end{scope}
+              
+              
+                  
+          \begin{scope}[shift={(28,0)}]
+            \node [vertex] (u4) at (-12,-18){${z}$};
+            \node [vertex] (u5) at (-8.5,-11.5){$\overline{z}$};
+            \node [vertex] (u6) at (-1.5,-11.5){${z}$};
+            \node [vertex] (u7) at (2,-17.8){$\overline{z}$};
+            \node [vertex] (u8) at (-1.5,-11.5){${z}$};
+            \node [vertex] (u9) at (-8.5,-25.5){$\overline{z}$};
+            \node [vertex] (u10) at (-1.5,-25.5){${z}$};
+          
+            \node [vertex][red] (u11) at (-10.9,-15.5){};
+            \node [vertex][red] (u12) at (-9.8,-13.5){};
+             \node [vertex][red] (u13) at (-11,-20.5){};
+            \node [vertex][red] (u14) at (-10,-23){}; 
+          
+            \node [vertex][red] (u15) at (-6,-25.5){};
+            \node [vertex][red] (u16) at (-4,-25.5){}; 
+            
+            \node [vertex][red][] (u17) at (-6,-11.5){};
+            \node [vertex][red] (u18) at (-4,-11.5){}; 
+            
+            \node [vertex][red] (u19) at (0,-13.5){};
+            \node [vertex][red] (u20) at (1,-15.5){}; 
+          
+            
+            \node [vertex][red] (u21) at (1.5,-20.5){};
+            \node [vertex][red] (u22) at (0.4,-23){};
+          
+           \draw[-] (u4) to (u11);
+          \draw[-] (u11) to (u12);
+          \draw[-] (u12) to (u5);
+          \draw[-] (u5) to (u17);
+          \draw[-] (u17) to (u18);
+          \draw[-] (u18) to (u8);
+          \draw[-] (u8) to (u19);
+          \draw[-] (u19) to (u20);
+          \draw[-] (u20) to (u7);
+          \draw[-] (u7) to (u21);
+          \draw[-] (u21) to (u22);
+          \draw[-] (u22) to (u10);
+          \draw[-] (u10) to (u16);
+          \draw[-] (u16) to (u15);
+          \draw[-] (u15) to (u9);
+          \draw[-] (u9) to (u14);
+          \draw[-] (u14) to (u13);
+          \draw[-] (u13) to (u4);
+          \draw[-] (u12) to (u17);
+          \draw[-] (u18) to (u19);
+          \draw[-] (u20) to (u21);
+          \draw[-] (u22) to (u16);
+          \draw[-] (u15) to (u14);
+          \draw[-] (u13) to (u11);
+         
+          
+          
+                \end{scope}
+          
+          
+          
+    
+    \end{tikzpicture}
+
+    \caption{CASO 1 = 9 , CASO 2 = 12 , CASO 3 =12}
+    \label{garraLB3}
+\end{figure}
+
+
+\begin{figure}[!htb]
+        \centering
+    
+        \begin{tikzpicture}[scale=0.23]
+        \pgfsetlinewidth{1pt}
+        
+        \tikzset{
+            vertex/.style={circle,  draw, minimum size=6pt, inner sep=0pt}
+            }
+            
+            
+            
+            \begin{scope}
+            
+            \node [vertex][red] (c11) at (-12.5,0){$x$};
+            \node [vertex] (c12) at (-8.5,5.5){$\overline{y}$};
+            \node [vertex] (c13) at (-6.5,0){$\overline{z}$};
+            
+  
+           \draw[-] (c11) to (c12);
+           \draw[-] (c12) to (c13);
+           \draw[-] (c11) to (c13);
+           
+            
+            
+            \end{scope}
+            
+           
+           \begin{scope}[shift={(10,0)}]
+           
+           \node [vertex] (c21) at (-12.5,0){$\overline{x}$};
+            \node [vertex] (c22) at (-8.5,5.5){$d$};
+            \node [vertex][red] (c23) at (-6.5,0){${z}$};
+           
+           \draw[-] (c21) to (c22);
+           \draw[-] (c22) to (c23);
+           \draw[-] (c21) to (c23);
+          
+           
+           
+           
+           \end{scope}
+           
+           \begin{scope}[shift={(19,0)}]
+           
+            \node [vertex] (c31) at (-12.5,0){$\overline{x}$};
+            \node [vertex] (c32) at (-8.5,5.5){$e$};
+            \node [vertex][red] (c33) at (-6.5,0){$y$};
+           
+        
+           \draw[-] (c31) to (c32);
+           \draw[-] (c32) to (c33);
+           \draw[-] (c31) to (c33);
+           
+           
+           
+           \end{scope}
+           
+     
+ %%%%%%%%%% variavel x %%%%%%%%%%%%%%%%%%         
+           
+            \begin{scope}[shift={(-4,0)}]
+            \node [vertex][red] (x4) at (-12,-18){${x}$};
+            \node [vertex] (x5) at (-8.5,-11.5){$\overline{x}$};
+            \node [vertex][red] (x6) at (-1.5,-11.5){${x}$};
+            \node [vertex] (x7) at (2,-17.8){$\overline{x}$};
+            \node [vertex][red] (x8) at (-1.5,-11.5){$x$};
+            \node [vertex] (x9) at (-8.5,-25.5){$\overline{x}$};
+            \node [vertex][red] (x10) at (-1.5,-25.5){${x}$};
+          
+            \node [vertex] (x11) at (-10.9,-15.5){};
+            \node [vertex][red] (x12) at (-9.8,-13.5){};
+             \node [vertex] (x13) at (-11,-20.5){};
+            \node [vertex][red] (x14) at (-10,-23){}; 
+          
+            \node [vertex][red] (x15) at (-6,-25.5){};
+            \node [vertex] (x16) at (-4,-25.5){}; 
+            
+            \node [vertex][red] (x17) at (-6,-11.5){};
+            \node [vertex] (x18) at (-4,-11.5){}; 
+            
+            \node [vertex] (x19) at (0,-13.5){};
+            \node [vertex][red] (x20) at (1,-15.5){}; 
+          
+            
+            \node [vertex][red] (x21) at (1.5,-20.5){};
+            \node [vertex] (x22) at (0.4,-23){};
+          
+           \draw[-] (x4) to (x11);
+          \draw[-] (x11) to (x12);
+          \draw[-] (x12) to (x5);
+          \draw[-] (x5) to (x17);
+          \draw[-] (x17) to (x18);
+          \draw[-] (x18) to (x8);
+          \draw[-] (x8) to (x19);
+          \draw[-] (x19) to (x20);
+          \draw[-] (x20) to (x7);
+          \draw[-] (x7) to (x21);
+          \draw[-] (x21) to (x22);
+          \draw[-] (x22) to (x10);
+          \draw[-] (x10) to (x16);
+          \draw[-] (x16) to (x15);
+          \draw[-] (x15) to (x9);
+          \draw[-] (x9) to (x14);
+          \draw[-] (x14) to (x13);
+          \draw[-] (x13) to (x4);
+          \draw[-] (x12) to (x17);
+          \draw[-] (x18) to (x19);
+          \draw[-] (x20) to (x21);
+          \draw[-] (x22) to (x16);
+          \draw[-] (x15) to (x14);
+          \draw[-] (x13) to (x11);
+          
+         
+          
+          
+          \end{scope}
+          
+         
+          
+          
+   %%%%%%%variavel z %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%       
+          \begin{scope}[shift={(18,0)}]
+            \node [vertex][red] (u1) at (-12,-10){${z}$};
+             \node [vertex] (u'1) at (-12,-12){};
+             \node [vertex] (u''1) at (-10,-10){};
+             \draw[](u1) to (u'1);
+             \draw[](u1) to (u''1);
+              \draw[](u'1) to (u''1);
+             \end{scope}
+              
+  \begin{scope}[shift={(18,-8)}]
+            \node [vertex][red] (u2) at (-12,-10){};
+             \node [vertex] (u'2) at (-12,-12){$\overline{z}$};
+             \node [vertex][red] (u''2) at (-10,-12){};
+             \draw[](u2) to (u'2);
+             \draw[](u2) to (u''2);
+              \draw[](u'2) to (u''2);
+             \end{scope}
+  
+   \begin{scope}[shift={(24,-8)}]
+            \node [vertex] (u3) at (-12,-12){};
+             \node [vertex][red] (u'3) at (-10,-12){${z}$};
+             \node [vertex] (u''3) at (-10,-10){};
+             \draw[](u3) to (u'3);
+             \draw[](u3) to (u''3);
+              \draw[](u'3) to (u''3);
+             \end{scope}
+  
+  
+   
+   \begin{scope}[shift={(26,0)}]
+            \node [vertex][red] (u4) at (-14,-10){};
+             \node [vertex][red] (u'4) at (-12,-12){};
+             \node [vertex] (u''4) at (-12,-10){$\overline{z}$};
+             \draw[](u4) to (u'4);
+             \draw[](u4) to (u''4);
+              \draw[](u'4) to (u''4);
+             \end{scope}
+  
+  
+     \draw[](u''1) to (u4);
+       \draw[](u'1) to (u2);
+    \draw[](u''2) to (u3);
+    \draw[](u''3) to (u'4);
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+  
+    %%%%%%% variável y %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+    \begin{scope}[shift={(-35,0)}]
+    
+          \begin{scope}[shift={(18,0)}]
+            \node [vertex][red] (y1) at (-12,-10){${y}$};
+             \node [vertex] (y'1) at (-12,-12){};
+             \node [vertex] (y''1) at (-10,-10){};
+             \draw[](y1) to (y'1);
+             \draw[](y1) to (y''1);
+              \draw[](y'1) to (y''1);
+             \end{scope}
+              
+  \begin{scope}[shift={(18,-8)}]
+            \node [vertex][red] (y2) at (-12,-10){};
+             \node [vertex] (y'2) at (-12,-12){$\overline{y}$};
+             \node [vertex][red] (y''2) at (-10,-12){};
+             \draw[](y2) to (y'2);
+             \draw[](y2) to (y''2);
+              \draw[](y'2) to (y''2);
+             \end{scope}
+  
+   \begin{scope}[shift={(24,-8)}]
+            \node [vertex] (y3) at (-12,-12){};
+             \node [vertex][red] (y'3) at (-10,-12){${y}$};
+             \node [vertex] (y''3) at (-10,-10){};
+             \draw[](y3) to (y'3);
+             \draw[](y3) to (y''3);
+              \draw[](y'3) to (y''3);
+             \end{scope}
+  
+  
+   
+   \begin{scope}[shift={(26,0)}]
+            \node [vertex][red] (y4) at (-14,-10){};
+             \node [vertex][red] (y'4) at (-12,-12){};
+             \node [vertex] (y''4) at (-12,-10){$\overline{y}$};
+             \draw[](y4) to (y'4);
+             \draw[](y4) to (y''4);
+              \draw[](y'4) to (y''4);
+             \end{scope}
+  
+  
+     \draw[](y''1) to (y4);
+       \draw[](y'1) to (y2);
+    \draw[](y''2) to (y3);
+    \draw[](y''3) to (y'4);
+    
+ \end{scope}    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+ %%%%%%%%%%%%%% variavel d %%%%%%%%%%%%%
+  
+   \begin{scope}[shift={(-10,30)}]
+    
+          \begin{scope}[shift={(18,0)}]
+            \node [vertex] (d1) at (-10,-10){${d}$};
+             \node [vertex][red] (d'1) at (-12,-12){};
+             \node [vertex][red] (d''1) at (-8,-12){};
+             \draw[](d1) to (d'1);
+             \draw[](d1) to (d''1);
+              \draw[](d'1) to (d''1);
+             \end{scope}             
+              
+            \begin{scope}[shift={(18,-5)}]
+            \node [vertex][red] (d2) at (-10,-14){$\overline{d}$};
+             \node [vertex] (d'2) at (-12,-12){};
+             \node [vertex] (d''2) at (-8,-12){};
+             \draw[](d2) to (d'2);
+             \draw[](d2) to (d''2);
+              \draw[](d'2) to (d''2);
+             \end{scope}  
+             
+    \draw[](d'1) to (d'2);          
+    \draw[](d''1) to (d''2);          
+  \end{scope}     
+       
+   
+    
+    
+  %%%%%%%%%%%%%% variavel e %%%%%%%%%%%%%
+  
+   \begin{scope}[shift={(-0,30)}]
+    
+          \begin{scope}[shift={(18,0)}]
+            \node [vertex] (e1) at (-10,-10){${e}$};
+             \node [vertex][red] (e'1) at (-12,-12){};
+             \node [vertex][red] (e''1) at (-8,-12){};
+             \draw[](e1) to (e'1);
+             \draw[](e1) to (e''1);
+              \draw[](e'1) to (e''1);
+             \end{scope}             
+              
+            \begin{scope}[shift={(18,-5)}]
+            \node [vertex][red] (e2) at (-10,-14){$\overline{e}$};
+             \node [vertex] (e'2) at (-12,-12){};
+             \node [vertex] (e''2) at (-8,-12){};
+             \draw[](e2) to (e'2);
+             \draw[](e2) to (e''2);
+              \draw[](e'2) to (e''2);
+             \end{scope}  
+             
+    \draw[](e'1) to (e'2);          
+    \draw[](e''1) to (e''2);          
+     
+ \end{scope}    
+ 
+  \draw[](d2) to (c22);    
+  \draw[](e2) to (c32);  
+  \draw[](y1) to (c12);  
+ \draw[](y''4) to (c33);
+ \draw[](u1) to (c13);  
+ \draw[](u''4) to (c23);
+ \draw[-] (c11) to (x5);
+ \draw[-] (c21) to (x4);
+\draw[-] (c31) to (x8);
+    \end{tikzpicture}
+   
+    
+    
+    
+\label{dupla2}
+    \caption{$F=(x \lor \overline{y} \lor \overline{z})\land(\overline{x} \lor {z} \lor {d})\land(\overline{x} \lor e \lor y)$}. $x= V, y= V , z=V, d=F ,e=F$
+    
+\end{figure}
+
+
+
+\begin{theorem}
+O problema do número de intervalo $P_3$ permanece NP-completo, mesmo quando restrito a grafos de expansão clique.
+\end{theorem}
+
+
+
+\begin{proof}
+Quanto à NP-pertinência, já é sabido que o problema do número de intervalo $P_3$ pertence NP em grafos gerais. Logo \cite{CENTENO} 
+\end{proof}
+
+Seja $F$ uma formula normal conjuntiva com $n$ cláusulas e $m$ variáveis do problema 1-in-3 SAT , em que dada uma variável ela aparece no máximo 3 vezes.
+Vamos construir um grafo $G$ apartir de $F$,onde:
+Cada cláusula é representada por um triângulo e cada variável é representada por um gate variável como na Figura  \ref{dupla2} onde os tipos de gate variáveis são feitos conforme o número de vezes que variável parece em F, por exemplo para x que aparece 3 vezes , y aparece duas e d aparece uma vez. Assim a Figura   \ref{dupla2} tem todos os casos possíveis. Por fim , cada gate clausula se liga ao gate variável por uma aresta tal que se a variavel for x no gate clausula conecta-se $\overline{x}$ no gate variável e assim sucessivamente. Marcamos em $G'$ as variáveis positivas nos gates clausulas e variáveis e no caso de serem negativas marcamos seus vizinhos no gate variavel como na Figura   \ref{dupla2}.
+Vamos mostrar que se F é satisfeita se e somente se existe uma dupla dominação para $G$ de tamanho $10n$.
+
+Seja F satifeita, ou seja, para cada clausula, temos que somente uma variável verdadeira. Para que cada triangulo seja duplamente dominado é necessário que seus os vizinhos que não foram marcados tenha seus vizinhos no gadte variavel marcados e isso acontece por construção. Temos um vértice em cada triangulo, ou seja em $G$ teremos n vértices para dupla dominação e para cada dadte variável  3x(numero de vezes que ele aparece) como temos 3n variáveis pois são 3 em cada clausula. Teremos n + 3x3n = 10n o conjunto dupla dominante. 
+
+Vamos supor agora que $G$ tenha uma dupla dominação de tamanho 10n. É facil ver que cada triangulo clausula precisa de um vértice marcado pelo menos, então temos n vértices macardos.Temos três possibilidades de dupla dominação dos vértices variáveis como mostramos na Figura \cite {garraLB3}. Que 3 vezes o número de variável. Temos assim 9n vértices marcados. Vemos que melhor caso é o que satisfaz F.  
+
+
+\begin{theorem}
+ $G$ é um grafo linha de bipartido.
+\end{theorem}
+
+
+
+
+
+
+
+
+
+
+
+
+
+ \bibliographystyle{splncs04}
+ \bibliography{bibliografia.bib}
+%
+
+\end{document}
